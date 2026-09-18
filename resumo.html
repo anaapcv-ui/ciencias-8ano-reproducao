@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumo — Ciências 8º ano (São José) · BIOARCA</title>
+<style>
+  :root{--bg:#0a0714;--panel:#161027;--panel2:#100b1f;--line:#2d2352;--green:#5eead4;--green2:#0f9b86;
+    --lime:#a3e635;--blue:#818cf8;--txt:#f0edfb;--muted:#a99fce;--yellow:#fcd34d;--red:#fb7185;--purple:#c084fc;--magenta:#f472b6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(900px 520px at 8% -8%,#4c1d9555,transparent),radial-gradient(820px 480px at 98% 0%,#0d948866,transparent),var(--bg);
+    color:var(--txt);font-family:'Segoe UI',system-ui,Arial,sans-serif;font-size:19px;line-height:1.65}
+  .wrap{max-width:920px;margin:0 auto;padding:14px 16px 90px}
+  header{position:relative;overflow:hidden;border-radius:18px;background:linear-gradient(125deg,#3b0764,#7c3aed 55%,#0d9488);
+    border:1px solid #a855f7;padding:24px 22px;margin-bottom:16px;box-shadow:0 10px 30px #0a071466}
+  header h1{margin:.1em 0;font-size:1.6rem} header p{margin:.2em 0;color:#f3e8ff}
+  .chip{display:inline-block;background:#3b0764;border:1px solid var(--magenta);color:#ffe3f4;font-size:.76rem;font-weight:700;padding:4px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.5px}
+  .salvar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:16px}
+  .salvar .info{color:var(--muted);font-size:.85rem;flex:1 1 200px}
+  button{font-family:inherit;cursor:pointer;border:none;border-radius:10px;padding:9px 14px;font-size:.92rem;font-weight:700;color:#0a0714;background:linear-gradient(90deg,var(--green),#7bf0dd)}
+  button.ghost{background:#22183f;color:var(--txt);border:1px solid var(--line)}
+  h2.sec{margin:26px 0 12px;font-size:1.35rem;color:#f6f2ff;border-left:5px solid var(--magenta);padding-left:12px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:12px 0}
+  .card b{color:var(--green)}
+  .card .azul{color:var(--blue);font-weight:700}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:12px 0}
+  .flip{background:transparent;perspective:1000px;min-height:160px;cursor:pointer}
+  .flip-in{position:relative;width:100%;height:100%;min-height:160px;transition:transform .5s;transform-style:preserve-3d}
+  .flip.vira .flip-in{transform:rotateY(180deg)}
+  .flip-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:16px;display:flex;flex-direction:column;justify-content:center;border:1px solid var(--line)}
+  .flip-front{background:linear-gradient(135deg,#161027,#241a44)}
+  .flip-front .t{font-weight:800;color:var(--green);font-size:1.1rem}
+  .flip-front .h{color:var(--muted);font-size:.82rem;margin-top:8px}
+  .flip-back{background:linear-gradient(135deg,#0a2c26,#123b58);transform:rotateY(180deg);font-size:.95rem}
+  .postit{background:#fff6c2;color:#3a2f00;border-radius:6px;padding:14px 16px;margin:12px 0;box-shadow:3px 4px 12px #0006;transform:rotate(-1deg);font-weight:600}
+  .postit b{color:#7a5c00}
+  .pegadinha{background:#2a1220;border:1px solid #6d2333;border-radius:12px;padding:14px 16px;margin:12px 0}
+  .pegadinha b{color:var(--red)}
+  .reservado{background:#1a1330;border:1px dashed var(--magenta);border-radius:14px;padding:14px 18px;margin:12px 0;color:#e9d5ff}
+  .reservado b{color:var(--magenta)}
+  .glossario{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px 18px;margin:12px 0}
+  .glossario dt{color:var(--green);font-weight:800;margin-top:12px}
+  .glossario dd{margin:2px 0 8px;color:var(--txt)}
+  table.mini{width:100%;border-collapse:collapse;font-size:.95rem;margin:8px 0}
+  table.mini td,table.mini th{border:1px solid var(--line);padding:8px 10px;text-align:left}
+  table.mini th{background:#241a44;color:var(--green)}
+  .nav-fim{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
+  .nav-fim a{background:#22183f;border:1px solid var(--line);color:var(--txt);text-decoration:none;font-weight:700;padding:12px 18px;border-radius:12px}
+  .nav-fim a.prim{background:linear-gradient(90deg,var(--magenta),var(--blue));color:#0a0714;border:none}
+  .modal-bg{position:fixed;inset:0;z-index:70;display:none;align-items:center;justify-content:center;background:#05010fd0;padding:20px}
+  .modal-bg.on{display:flex}
+  .modal-card{max-width:430px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .modal-acoes{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="modal-bg" id="modalBg"><div class="modal-card"><div id="modalTxt"></div><div class="modal-acoes" id="modalAcoes"></div></div></div>
+
+<div id="app"><div class="wrap">
+  <header><span class="chip">🗺️ BIOARCA · Resumo</span>
+    <h1>Resumo — Ciências 8º ano · Colégio São José</h1>
+    <p><b>Prova de 21/09</b> — Reprodução das plantas, dos invertebrados e dos vertebrados</p>
+    <p style="font-size:.92rem;color:#f3e8ff">Toque nas <b>cartas</b> para virar e ver a resposta. Fique de olho nos <b>post-its amarelos</b> (dicas) e nos <b>alertas vermelhos</b> (pegadinhas). 🧬</p></header>
+  <div class="salvar"><div class="info" id="saveinfo">Sua leitura é registrada para o relatório dos pais.</div>
+    <button class="ghost" onclick="exportar()">📥 Exportar</button>
+    <button class="ghost" onclick="document.getElementById('imp').click()">📤 Importar</button>
+    <input id="imp" type="file" accept="application/json" style="display:none" onchange="importar(event)">
+    <button class="ghost" onclick="zerar()">🗑️ Zerar tudo</button></div>
+
+  <!-- 1. PLANTAS -->
+  <h2 class="sec">🌱 1. Plantas com sementes</h2>
+  <div class="card"><b>Gimnospermas</b>: têm semente <b>nua</b> (sem fruto). Ex.: <span class="azul">araucária</span> (semente = pinhão). A parte visível é o <b>esporófito</b>; o gametófito é minúsculo, dentro dos <span class="azul">estróbilos</span> (as pinhas), que são masculinos e femininos.</div>
+  <div class="card"><b>Angiospermas</b>: têm duas novidades exclusivas — a <b>flor</b> e o <b>fruto</b>. A reprodução delas <b>não depende de água</b> (como nas gimnospermas), graças ao <b>tubo polínico</b>.</div>
+  <div class="grid">
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Reprodução da gimnosperma</div><div class="h">Como o pólen chega? (toque)</div></div>
+      <div class="flip-face flip-back">O <b>vento</b> leva o grão de pólen até o estróbilo feminino → forma o <b>tubo polínico</b> → o gameta masculino chega ao feminino <b>sem água</b>. Depois: óvulo → <b>semente</b>.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Partes da flor</div><div class="h">Masculino e feminino? (toque)</div></div>
+      <div class="flip-face flip-back"><b>Estame</b> (antera + filete) = masculino (androceu). <b>Carpelo</b> (ovário + óvulos) = feminino (gineceu). Pétalas atraem; sépalas protegem o botão.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Depois da fecundação</div><div class="h">O que vira o quê? (toque)</div></div>
+      <div class="flip-face flip-back">Óvulo → <b>SEMENTE</b>. Ovário → <b>FRUTO</b>. (A parede do ovário vira o <b>pericarpo</b>.)</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Polinização</div><div class="h">Quem transporta? (toque)</div></div>
+      <div class="flip-face flip-back"><b>Agentes físicos</b> (vento/água): flor sem cheiro, muito pólen leve (milho). <b>Animais</b> (abelha, borboleta, morcego): flor com néctar/cor/cheiro. Dá mais certo!</div></div></div>
+  </div>
+  <div class="grid">
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Pseudofruto</div><div class="h">Caju e banana? (toque)</div></div>
+      <div class="flip-face flip-back">Parte carnosa que NÃO veio do ovário. No <b>caju</b>: a parte suculenta é pseudofruto; o fruto verdadeiro é a <b>castanha</b>. A <b>banana</b> também é pseudofruto.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Semente e germinação</div><div class="h">(toque)</div></div>
+      <div class="flip-face flip-back">Semente = <b>embrião</b> + <b>reserva de alimento</b> + <b>casca</b>. Germina com água, temperatura, luz e oxigênio. <b>Dormência</b> = não germina mesmo em boas condições.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Dispersão</div><div class="h">Como espalha? (toque)</div></div>
+      <div class="flip-face flip-back"><b>Vento</b> (dente-de-leão, tipo paraquedas), <b>água</b> (coco-da-baía boia), <b>animais</b> (frutos comidos, sementes nas fezes; ou carrapicho que gruda).</div></div></div>
+  </div>
+  <div class="postit">📌 <b>Dica de prova:</b> lembre a troca — <b>óvulo vira semente</b> e <b>ovário vira fruto</b>. Muita gente inverte e perde a questão.</div>
+  <div class="pegadinha">⚠️ <b>Pegadinha:</b> gimnosperma TEM semente (só não tem fruto). E a reprodução dela NÃO depende de água (por causa do tubo polínico).</div>
+  <table class="mini"><tr><th>Grupo de gimnosperma</th><th>Exemplo</th></tr>
+    <tr><td>Coníferas</td><td>Araucária, pinheiro, sequoia</td></tr>
+    <tr><td>Cicadófitas</td><td>Cicas (parecem palmeira)</td></tr>
+    <tr><td>Ginkgófitas</td><td>Ginkgo biloba (folha em leque)</td></tr>
+    <tr><td>Gnetófitas</td><td>Welwitschia, Ephedra, Gnetum</td></tr></table>
+
+  <!-- 2. INVERTEBRADOS -->
+  <h2 class="sec">🐚 2. Reprodução dos invertebrados</h2>
+  <div class="card"><b>Assexuada</b> = sem gametas (brotamento, fragmentação, regeneração). <b>Sexuada</b> = com gametas. A fecundação pode ser <b>externa</b> (na água) ou <b>interna</b> (dentro da fêmea).</div>
+  <div class="grid">
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Poríferos (esponjas)</div><div class="h">(toque)</div></div>
+      <div class="flip-face flip-back">Assexuada por <b>brotamento</b>/fragmentação; sexuada com gametas. Ovos formam <b>larvas</b> que nadam e depois se fixam.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Cnidários</div><div class="h">3 formas? (toque)</div></div>
+      <div class="flip-face flip-back">Assexuada (brotamento, nos <b>pólipos</b>), sexuada (medusa) e <b>alternância de gerações</b>. <b>Medusa</b> nada; <b>pólipo</b> é fixo.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Planária (platelminto)</div><div class="h">(toque)</div></div>
+      <div class="flip-face flip-back"><b>Fecundação cruzada</b> (dois indivíduos trocam espermatozoides) e grande <b>regeneração</b> (cortada ao meio, se refaz).</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Lombriga (nematódeo)</div><div class="h">(toque)</div></div>
+      <div class="flip-face flip-back"><b>Dioica</b>, com <b>dimorfismo sexual</b> (macho ≠ fêmea) e fecundação interna. Causa <b>verminose</b>. Prevenção: higiene e saneamento.</div></div></div>
+  </div>
+  <div class="grid">
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Minhoca (anelídeo)</div><div class="h">O clitelo? (toque)</div></div>
+      <div class="flip-face flip-back">Hermafrodita, fecundação cruzada. O <b>clitelo</b> forma um <b>casulo de muco</b> onde ocorre a fecundação e ficam os ovos.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Insetos (artrópodes)</div><div class="h">Metamorfose? (toque)</div></div>
+      <div class="flip-face flip-back"><b>Incompleta</b>: ovo → ninfa → adulto (barata, gafanhoto). <b>Completa</b>: ovo → larva → pupa → adulto (borboleta).</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Partenogênese</div><div class="h">(toque)</div></div>
+      <div class="flip-face flip-back">Óvulo se desenvolve <b>sem fecundação</b>. Ex.: alguns escorpiões e crustáceos. Estrela-do-mar (equinodermo): assexuada por regeneração.</div></div></div>
+  </div>
+  <div class="pegadinha">⚠️ <b>Pegadinha:</b> medusa <b>nada</b> e faz a parte sexuada; pólipo é <b>fixo</b> e faz brotamento. Não troque!</div>
+  <div class="postit">📌 <b>Dica de prova:</b> regeneração vira reprodução assexuada só quando ela gera <b>novos indivíduos</b> (ex.: estrela-do-mar).</div>
+
+  <!-- 3. VERTEBRADOS -->
+  <h2 class="sec">🐟 3. Reprodução dos vertebrados</h2>
+  <div class="card">Termos importantes: <b>ovíparo</b> (põe ovos no ambiente), <b>vivíparo</b> (embrião dentro da fêmea) e <b>ovovivíparo</b> (ovo dentro da fêmea, filhote sai depois). Desenvolvimento <b>direto</b> (já nasce parecido com o adulto) ou <b>indireto</b> (passa por larva).</div>
+  <div class="grid">
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Peixes</div><div class="h">(toque)</div></div>
+      <div class="flip-face flip-back">Ósseos: fecundação <b>externa</b>, muitos ovos, ovíparos. Larva = <b>alevino</b>. <b>Defeso</b> = pesca proibida na reprodução.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Anfíbios</div><div class="h">Girino? (toque)</div></div>
+      <div class="flip-face flip-back">Dependem da água. Ovíparos, fecundação <b>externa</b>, desenvolvimento indireto. Larva = <b>girino</b> (brânquias, cauda) → <b>metamorfose</b> → sapo adulto (pulmões).</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Répteis</div><div class="h">(toque)</div></div>
+      <div class="flip-face flip-back"><b>Amniotas</b>: têm o <b>ovo amniótico</b>, com casca porosa. Fecundação <b>interna</b>. Muitos ovíparos (tocas/areia); há ovovivíparos e vivíparos.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Aves</div><div class="h">(toque)</div></div>
+      <div class="flip-face flip-back">Amniotas, ovíparas; casca <b>dura</b> de <b>carbonato de cálcio</b>. Fecundação interna. <b>Cuidado parental</b>: ninho, chocar, proteger e alimentar (ex.: pinguim-imperador).</div></div></div>
+  </div>
+  <div class="card"><b>Ovo amniótico</b> (répteis e aves) — as partes: <span class="azul">âmnio</span> (protege o embrião do ressecamento/choques), <span class="azul">saco vitelínico</span> (reserva de alimento), <span class="azul">cório</span> (protege as estruturas internas), <span class="azul">alantoide</span> (guarda excretas e faz trocas de gases) e <span class="azul">albúmen</span> (a "clara", água e proteção). A casca é <b>porosa</b> para deixar passar gases.</div>
+  <div class="pegadinha">⚠️ <b>Pegadinha:</b> a larva do <b>peixe</b> é o <b>alevino</b>; a do <b>anfíbio</b> é o <b>girino</b>. Não confunda os dois!</div>
+  <h2 class="sec">🐾 4. Reprodução dos mamíferos</h2>
+  <div class="card">Fecundação <b>interna</b>; na maioria, o embrião se desenvolve <b>dentro da fêmea</b>. Depois de nascer, os filhotes tomam <b>leite materno</b>, feito pelas <span class="azul">glândulas mamárias</span>. Os machos costumam ajudar nos cuidados.</div>
+  <div class="card"><b>Placenta</b> = estrutura <b>exclusiva</b> dos mamíferos. Ela passa <b>oxigênio e nutrientes</b> do sangue da mãe para o embrião e recebe de volta o <b>gás carbônico e as excretas</b>.</div>
+  <div class="grid">
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Placentários</div><div class="h">(toque)</div></div>
+      <div class="flip-face flip-back">Embrião no <b>útero</b>, placenta bem desenvolvida, ligado pelo <b>cordão umbilical</b> e envolvido pelo <b>âmnio</b>. Gestação longa (rato 21 dias, cão/gato 60 dias, elefante 22 meses). Ex.: ser humano.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Marsupiais</div><div class="h">A bolsa? (toque)</div></div>
+      <div class="flip-face flip-back">Placenta <b>pouco</b> desenvolvida, gestação <b>curta</b>. Filhote nasce muito imaturo e vai para a <b>bolsa marsupial (marsúpio)</b>, onde ficam as mamas e completa o desenvolvimento. Ex.: cuíca.</div></div></div>
+    <div class="flip" onclick="this.classList.toggle('vira')"><div class="flip-in">
+      <div class="flip-face flip-front"><div class="t">Monotremados</div><div class="h">Botam ovo? (toque)</div></div>
+      <div class="flip-face flip-back"><b>Ovíparos</b> e não placentários! Desenvolvem em <b>ovos</b>. Ornitorrinco e equidna (Austrália). As fêmeas <b>não têm mamas</b>: os filhotes <b>lambem</b> o leite que escorre.</div></div></div>
+  </div>
+  <table class="mini"><tr><th>Grupo</th><th>Onde o embrião se desenvolve</th><th>Exemplo</th></tr>
+    <tr><td>Placentários</td><td>Útero, com placenta bem desenvolvida</td><td>Ser humano, cão, elefante</td></tr>
+    <tr><td>Marsupiais</td><td>Útero (curto) e depois no marsúpio</td><td>Cuíca, canguru</td></tr>
+    <tr><td>Monotremados</td><td>Dentro de ovos (ovíparos)</td><td>Ornitorrinco, equidna</td></tr></table>
+  <div class="pegadinha">⚠️ <b>Pegadinha:</b> monotremado (ornitorrinco/equidna) é mamífero que <b>põe ovo</b> — e não tem mamas (o filhote lambe o leite). A <b>placenta</b> é exclusiva dos mamíferos.</div>
+
+  <!-- GLOSSÁRIO -->
+  <h2 class="sec">📖 Glossário rápido</h2>
+  <dl class="glossario">
+    <dt>Esporófito</dt><dd>Fase duradoura e visível da planta (ex.: a araucária inteira).</dd>
+    <dt>Estróbilo</dt><dd>Estrutura em forma de cone das gimnospermas (a pinha), masculina ou feminina.</dd>
+    <dt>Tubo polínico</dt><dd>"Caminho" que leva o gameta masculino até o feminino, sem precisar de água.</dd>
+    <dt>Estame / Carpelo</dt><dd>Estame = órgão masculino da flor (antera + filete). Carpelo = órgão feminino (ovário + óvulos).</dd>
+    <dt>Pericarpo</dt><dd>A parede do fruto (epicarpo, mesocarpo e endocarpo), que se forma do ovário.</dd>
+    <dt>Fecundação cruzada</dt><dd>Dois indivíduos trocam espermatozoides entre si.</dd>
+    <dt>Dimorfismo sexual</dt><dd>Macho e fêmea da mesma espécie têm aparências diferentes.</dd>
+    <dt>Metamorfose</dt><dd>Série de transformações no desenvolvimento indireto (ex.: girino → sapo; larva → borboleta).</dd>
+    <dt>Amniota</dt><dd>Animal com ovo amniótico (répteis e aves), que reproduz longe da água.</dd>
+    <dt>Cuidado parental</dt><dd>Cuidado dos pais com os filhotes (ninho, chocar, proteger, alimentar).</dd>
+    <dt>Placenta</dt><dd>Estrutura exclusiva dos mamíferos que troca gases e nutrientes entre a mãe e o embrião.</dd>
+    <dt>Glândulas mamárias</dt><dd>Órgãos das fêmeas dos mamíferos que produzem o leite materno.</dd>
+    <dt>Marsúpio</dt><dd>Bolsa dos marsupiais onde o filhote imaturo completa o desenvolvimento.</dd>
+    <dt>Monotremados</dt><dd>Mamíferos ovíparos (que põem ovos), como o ornitorrinco e a equidna.</dd>
+  </dl>
+  <div class="card" style="text-align:center">✅ Terminou o resumo? Vá para o <b>Simulado</b> valendo! 💪</div>
+
+  <div class="nav-fim">
+    <a href="quiz.html">← Quiz</a>
+    <a class="prim" href="simulado.html">Ir para o Simulado →</a>
+  </div>
+</div></div>
+
+<script>
+const KEY='ciencias8_sj_reproducao_resumo_v1';
+let estado={scrollMax:0,ts:null};let mem={};
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return mem[k]||null;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){mem[k]=v;}}
+function lsDel(k){try{localStorage.removeItem(k);}catch(e){delete mem[k];}}
+function carregar(){try{const s=lsGet(KEY);if(s)estado=JSON.parse(s);}catch(e){}}
+function salvar(){estado.ts=new Date().toISOString();lsSet(KEY,JSON.stringify(estado));pintarInfo();}
+function pintarInfo(){const el=document.getElementById('saveinfo');el.innerHTML='📖 Leitura registrada: <b>'+(estado.scrollMax||0)+'%</b> da página.';}
+function modalConfirm(html,onSim,txtSim,txtNao){document.getElementById('modalTxt').innerHTML=html;const ac=document.getElementById('modalAcoes');ac.innerHTML='';
+  const b1=document.createElement('button');b1.className='ghost';b1.textContent=txtNao||'Cancelar';b1.onclick=()=>document.getElementById('modalBg').classList.remove('on');
+  const b2=document.createElement('button');b2.textContent=txtSim||'Confirmar';b2.onclick=()=>{document.getElementById('modalBg').classList.remove('on');onSim&&onSim();};
+  ac.appendChild(b1);ac.appendChild(b2);document.getElementById('modalBg').classList.add('on');}
+function modalInfo(html){document.getElementById('modalTxt').innerHTML=html;const ac=document.getElementById('modalAcoes');ac.innerHTML='';
+  const b=document.createElement('button');b.textContent='Ok';b.onclick=()=>document.getElementById('modalBg').classList.remove('on');ac.appendChild(b);document.getElementById('modalBg').classList.add('on');}
+function registrarScroll(){
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  const p=h>0?Math.round(window.scrollY/h*100):100;
+  if(p>(estado.scrollMax||0)){estado.scrollMax=Math.min(100,p);salvar();}
+}
+function exportar(){const out={resumo:estado};const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='progresso-resumo-ciencias8.json';a.click();}
+function importar(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const o=JSON.parse(r.result);if(o.resumo)estado=o.resumo;else estado=o;salvar();modalInfo('<p>✅ Importado!</p>');}catch(e){modalInfo('<p>Arquivo inválido.</p>');}};
+  r.readAsText(f);}
+function zerar(){modalConfirm('<p><b>Zerar tudo?</b></p><p>Apaga a leitura registrada.</p>',
+  ()=>{estado={scrollMax:0,ts:null};lsDel(KEY);pintarInfo();modalInfo('<p>🗑️ Zerado!</p>');},'Sim, zerar','Cancelar');}
+carregar();pintarInfo();window.addEventListener('scroll',registrarScroll,{passive:true});
+</script>
+</body>
+</html>

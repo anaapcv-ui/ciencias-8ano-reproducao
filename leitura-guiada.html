@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leitura Guiada — Ciências 8º ano (São José) · BIOARCA</title>
+<style>
+  :root{
+    --bg:#0a0714; --panel:#161027; --panel2:#100b1f;
+    --line:#2d2352; --green:#5eead4; --green2:#0f9b86;
+    --lime:#a3e635; --blue:#818cf8; --txt:#f0edfb; --muted:#a99fce;
+    --yellow:#fcd34d; --red:#fb7185; --redbg:#2a1220; --magenta:#f472b6;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:
+      radial-gradient(900px 520px at 8% -8%, #4c1d9555, transparent),
+      radial-gradient(820px 480px at 98% 0%, #0d948866, transparent),
+      var(--bg);
+    color:var(--txt);font-family:'Segoe UI',system-ui,Arial,sans-serif;
+    font-size:18px;line-height:1.65}
+  .wrap{max-width:920px;margin:0 auto;padding:14px 16px 90px}
+
+  header{position:relative;overflow:hidden;border-radius:18px;
+    background:linear-gradient(125deg,#1e1b4b,#4c1d95 55%,#0d9488);
+    border:1px solid #6d5bd0;padding:24px 22px;margin-bottom:16px;
+    box-shadow:0 10px 30px #0a071466}
+  header h1{margin:.1em 0;font-size:1.6rem;letter-spacing:.3px}
+  header p{margin:.2em 0;color:#ece9ff}
+  .chip{display:inline-block;background:#2a1a58;border:1px solid var(--magenta);
+    color:#ffe3f4;font-size:.76rem;font-weight:700;padding:4px 10px;border-radius:999px;
+    text-transform:uppercase;letter-spacing:.5px}
+  .stars{position:absolute;inset:0;opacity:.5;pointer-events:none}
+
+  .progresso{position:sticky;top:0;z-index:30;margin:0 -16px 16px;
+    background:#0a0714dd;backdrop-filter:blur(6px);padding:10px 16px;border-bottom:1px solid var(--line)}
+  .barra{height:14px;background:#1a1330;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+  .barra > i{display:block;height:100%;width:0;border-radius:999px;
+    background:linear-gradient(90deg,var(--magenta),var(--green),var(--lime));transition:width .5s ease}
+  .progresso small{color:var(--muted)}
+
+  .salvar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:16px}
+  .salvar .info{color:var(--muted);font-size:.85rem;flex:1 1 200px}
+  button{font-family:inherit;cursor:pointer;border:none;border-radius:10px;
+    padding:9px 14px;font-size:.92rem;font-weight:700;color:#0a0714;
+    background:linear-gradient(90deg,var(--green),#7bf0dd)}
+  button.ghost{background:#22183f;color:var(--txt);border:1px solid var(--line)}
+  button:disabled{opacity:.45;cursor:not-allowed;filter:grayscale(.3)}
+
+  .bloco{background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    padding:20px 20px 22px;margin-bottom:16px;position:relative;box-shadow:0 6px 18px #05010f55}
+  .bloco.travado{opacity:.55}
+  .bloco.travado .conteudo{display:none}
+  .bloco h2{margin:.1em 0 .3em;font-size:1.2rem;color:#f6f2ff}
+  .bloco .num{display:inline-flex;align-items:center;justify-content:center;
+    width:34px;height:34px;border-radius:9px;font-weight:800;margin-right:10px;
+    background:linear-gradient(135deg,var(--magenta),var(--blue));color:#0a0714}
+  .setor{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.6px;
+    color:var(--magenta);display:block;margin-bottom:2px}
+  .lock{position:absolute;right:18px;top:18px;color:var(--muted);font-size:.85rem}
+  .texto p{margin:.55em 0}
+  .destaque{color:var(--green);font-weight:700}
+  .destaque-azul{color:var(--blue);font-weight:700}
+  .tipo{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;
+    padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:middle}
+  .tipo.conc{background:#1a1a4a;color:var(--blue);border:1px solid #3a3a7a}
+  .tipo.aplic{background:#1f3010;color:var(--lime);border:1px solid #4a6a1a}
+
+  .pergunta{margin:16px 0 4px;font-weight:700;color:#f6f2ff}
+  textarea{width:100%;min-height:66px;resize:vertical;background:var(--panel2);
+    border:1px solid var(--line);border-radius:10px;color:var(--txt);
+    padding:10px 12px;font-family:inherit;font-size:.95rem;margin-top:6px}
+  textarea:focus{outline:2px solid var(--blue);border-color:var(--blue)}
+  .qbox.red textarea{border-color:var(--red);background:#22121599}
+  .avisocopia{display:none;margin-top:8px;background:#3a2f10;border:1px solid #8a7320;
+    color:var(--yellow);border-radius:10px;padding:9px 12px;font-size:.9rem}
+  .avisocopia.on{display:block}
+  .marcavermelha{display:none;margin-top:8px;background:var(--redbg);border:1px solid #6d2333;
+    color:#ff9aa6;border-radius:10px;padding:9px 12px;font-size:.9rem}
+  .marcavermelha.on{display:block}
+
+  .modelo{display:none;margin-top:10px;background:#0a2c26;border:1px solid #12715f;
+    border-radius:10px;padding:10px 13px}
+  .modelo b{color:var(--green)}
+  .checkbox-modelo{display:none;margin-top:8px;background:#150f2b;border:1px dashed var(--line);
+    border-radius:10px;padding:10px 13px}
+  .checkbox-modelo .cq{font-size:.9rem;color:var(--muted);margin-bottom:6px}
+  .checkbox-modelo label{display:inline-flex;gap:5px;align-items:center;background:#22183f;
+    border:1px solid var(--line);border-radius:999px;padding:4px 11px;cursor:pointer;font-size:.86rem;margin:3px 5px 3px 0}
+  .checkbox-modelo label.sim{border-color:var(--green)}
+  .checkbox-modelo label.nao{border-color:var(--yellow)}
+
+  .acoes{margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .feito{color:var(--green);font-weight:700;display:none}
+  .status-bloco{display:none;font-weight:700;margin-left:4px}
+  .status-bloco.ok{color:var(--green)}
+  .status-bloco.rev{color:var(--yellow)}
+
+  .reservado{background:#1a1330;border:1px dashed var(--magenta);border-radius:16px;
+    padding:18px 20px;margin-bottom:16px;color:#e9d5ff}
+  .reservado h2{color:var(--magenta);margin:.1em 0 .3em;font-size:1.1rem}
+
+  .pegadinhas{background:var(--redbg);border:1px solid #5e1e26;border-radius:16px;padding:20px;margin-top:8px}
+  .pegadinhas h2{color:var(--red);margin-top:0}
+  .pegadinhas ol{margin:0;padding-left:20px}
+  .pegadinhas li{margin:8px 0}
+
+  .cobertura,.revisar-final{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:16px}
+  .cobertura table{width:100%;border-collapse:collapse;font-size:.92rem}
+  .cobertura td,.cobertura th{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left}
+  .revisar-final ul{margin:.4em 0;padding-left:20px}
+  .revisar-final li{margin:6px 0;color:#ff9aa6}
+
+  .final-trancado{text-align:center;color:var(--muted);padding:26px;border:1px dashed var(--line);border-radius:16px;margin-top:8px}
+  .parabens{text-align:center;background:linear-gradient(135deg,#1e1b4b,#0d9488);
+    border:1px solid var(--green);border-radius:16px;padding:24px;margin-bottom:16px;display:none}
+
+  .nav-fim{display:flex;justify-content:center;margin-top:22px}
+  .nav-fim a{background:linear-gradient(90deg,var(--magenta),var(--blue));color:#0a0714;
+    text-decoration:none;font-weight:800;padding:13px 22px;border-radius:12px}
+
+  .modal-bg{position:fixed;inset:0;z-index:70;display:none;align-items:center;justify-content:center;background:#05010fd0;padding:20px}
+  .modal-bg.on{display:flex}
+  .modal-card{max-width:430px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .modal-card p{margin-top:0}
+  .modal-acoes{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<div class="modal-bg" id="modalBg">
+  <div class="modal-card">
+    <div id="modalTxt"></div>
+    <div class="modal-acoes" id="modalAcoes"></div>
+  </div>
+</div>
+
+<div id="app">
+<div class="wrap">
+
+  <header>
+    <svg class="stars" viewBox="0 0 900 200" preserveAspectRatio="none">
+      <circle cx="80" cy="40" r="2" fill="#fff"/><circle cx="200" cy="90" r="1.5" fill="#ffe3f4"/>
+      <circle cx="350" cy="30" r="2" fill="#c7ffee"/><circle cx="520" cy="70" r="1.5" fill="#fff"/>
+      <circle cx="680" cy="45" r="2" fill="#e9d5ff"/><circle cx="820" cy="100" r="1.5" fill="#fff"/>
+      <circle cx="120" cy="150" r="1.5" fill="#c7ffee"/><circle cx="440" cy="150" r="2" fill="#fff"/>
+      <circle cx="760" cy="160" r="1.5" fill="#ffe3f4"/>
+    </svg>
+    <span class="chip">🚀 BIOARCA · Protocolo Semente · Leitura Guiada</span>
+    <h1>Ciências — 8º ano · Colégio São José</h1>
+    <p><b>Prova de 21/09</b> — Plantas com sementes · Reprodução dos invertebrados · Reprodução dos vertebrados</p>
+    <p style="font-size:.92rem;color:#e9d5ff">Você é a <b>jovem aprendiz</b> a bordo da BIOARCA, uma nave que cataloga <b>como a vida se reproduz</b>. Leia cada módulo, responda <b>com as suas palavras</b> e confira. O próximo módulo só destrava quando você termina o anterior. 🧬</p>
+  </header>
+
+  <div class="progresso">
+    <div class="barra"><i id="fill"></i></div>
+    <small id="progtxt">Módulo 0 concluído</small>
+  </div>
+
+  <div class="salvar">
+    <div class="info" id="saveinfo">Seu progresso é salvo sozinho neste navegador.</div>
+    <button class="ghost" onclick="exportar()">📥 Exportar progresso</button>
+    <button class="ghost" onclick="document.getElementById('imp').click()">📤 Importar</button>
+    <input id="imp" type="file" accept="application/json" style="display:none" onchange="importar(event)">
+    <button class="ghost" onclick="zerar()">🗑️ Zerar tudo</button>
+  </div>
+
+  <div id="blocos"></div>
+
+  <div id="finalTrancado" class="final-trancado">🔒 Termine todos os módulos para liberar as <b>pegadinhas da prova</b>, a tabela de cobertura e o resumo da sua autoavaliação.</div>
+
+  <div id="parabens" class="parabens">
+    <h2>🎉 Setores concluídos, jovem aprendiz!</h2>
+    <p>Você catalogou a reprodução das plantas, dos invertebrados e dos vertebrados (peixes, anfíbios, répteis, aves e mamíferos). Confira abaixo.</p>
+  </div>
+
+  <div id="pegadinhasBox"></div>
+  <div id="revisarBox"></div>
+  <div id="coberturaBox"></div>
+
+  <div class="nav-fim"><a href="quiz.html">🎯 Ir para o Quiz →</a></div>
+
+</div>
+</div>
+
+<script>
+/* =================== CONTEÚDO (extraído do livro de Ciências 8º ano — SM) =================== */
+const BLOCOS = [
+{
+ setor:"Setor Botânico", t:"Gimnospermas: a semente nua", topico:"Plantas com sementes (Gimnospermas)",
+ texto:`<p>As <span class="destaque">gimnospermas</span> são plantas que têm <b>semente</b>, mas com uma característica curiosa: a semente é <span class="destaque">"nua"</span>, ou seja, <b>não fica dentro de um fruto</b> ("gimno" quer dizer nu). No Brasil existem 22 espécies nativas. A mais famosa é a <span class="destaque-azul">araucária</span> (o pinheiro-do-paraná), que pode chegar a uns 50 metros de altura. A semente dela é o <b>pinhão</b>, que a gente come.</p>
+ <p>A parte grande e visível da planta — tronco, galhos, folhas e as pinhas — é o <span class="destaque">esporófito</span>, que é a fase que dura mais tempo na vida da planta. Já o <b>gametófito</b> é minúsculo e fica escondido dentro dos <span class="destaque-azul">estróbilos</span>, que são estruturas em <b>forma de cone</b> — as pinhas.</p>
+ <p>Existem estróbilos <b>masculinos</b> e <b>femininos</b>. É dentro deles que a reprodução vai acontecer, como veremos no próximo módulo.</p>`,
+ q:[
+  {p:"Com as suas palavras, o que quer dizer a semente da gimnosperma ser 'nua'?", tipo:"conc",
+   m:"Quer dizer que a semente não fica dentro de um fruto — ela fica exposta, sem a proteção de um fruto (protegida apenas pelo estróbilo/pinha).",
+   chk:["Falei que não há fruto envolvendo a semente?","Escrevi com as minhas palavras?"]},
+  {p:"Você vê uma araucária gigante cheia de pinhas. Um amigo pergunta qual parte é o esporófito. O que você responde e por quê?", tipo:"aplic",
+   m:"A planta grande e visível (tronco, galhos, folhas, pinhas) é o esporófito, a fase que dura mais tempo; o gametófito é minúsculo e fica escondido dentro dos estróbilos.",
+   chk:["Disse que a planta visível é o esporófito?","Falei que o gametófito é reduzido/escondido?"]},
+  {p:"O pinhão que a gente come corresponde a que parte da araucária, e de qual estróbilo ele vem?", tipo:"aplic",
+   m:"O pinhão é a semente da araucária, e vem do estróbilo feminino.",
+   chk:["Disse que o pinhão é a semente?","Liguei ao estróbilo feminino?"]}]
+},
+{
+ setor:"Setor Botânico", t:"Gimnospermas: reprodução sem água e diversidade", topico:"Plantas com sementes (Gimnospermas)",
+ texto:`<p>Nos estróbilos <b>masculinos</b> formam-se os <span class="destaque">grãos de pólen</span>; nos <b>femininos</b> formam-se os <span class="destaque">óvulos</span>. O <span class="destaque-azul">vento</span> carrega o pólen até um estróbilo feminino. Ali o grão germina e forma o <span class="destaque">tubo polínico</span>, uma espécie de "caminho" por onde o gameta masculino desce até o feminino — <b>sem precisar de água</b>.</p>
+ <p>Justamente por isso as gimnospermas conseguiram viver longe da água, ocupando vários ambientes de terra firme. Depois da fecundação, o zigoto vira <b>embrião</b> e o óvulo forma a <span class="destaque">semente</span>, já com reserva de alimento dentro.</p>
+ <p>Hoje há <b>4 grupos</b> de gimnospermas: <span class="destaque-azul">coníferas</span> (araucárias, pinheiros, sequoias — estróbilos em cone), <span class="destaque-azul">cicadófitas</span> (as cicas, que parecem palmeiras), <span class="destaque-azul">ginkgófitas</span> (a <i>Ginkgo biloba</i>, de folhas em leque, muito usada em remédios) e <span class="destaque-azul">gnetófitas</span> (formas variadas, como a <i>Welwitschia</i>).</p>`,
+ q:[
+  {p:"Por que a reprodução das gimnospermas NÃO depende da água?", tipo:"conc",
+   m:"Porque o pólen é levado pelo vento e forma o tubo polínico, que leva o gameta masculino até o feminino sem precisar de água.",
+   chk:["Falei do vento levando o pólen?","Falei do tubo polínico levando o gameta?"]},
+  {p:"Explique, na ordem, o caminho do grão de pólen até acontecer a fecundação.", tipo:"aplic",
+   m:"O pólen sai do estróbilo masculino → o vento leva até o estróbilo feminino → o grão germina e forma o tubo polínico → o gameta masculino desce por ele e fecunda o feminino.",
+   chk:["Coloquei os passos numa ordem lógica?","Citei o vento e o tubo polínico?"]},
+  {p:"Classifique cada uma no grupo certo: uma sequoia gigante; a Ginkgo biloba de folhas em leque.", tipo:"aplic",
+   m:"A sequoia é uma conífera; a Ginkgo biloba é uma ginkgófita.",
+   chk:["Sequoia = conífera?","Ginkgo = ginkgófita?"]}]
+},
+{
+ setor:"Setor Botânico", t:"Angiospermas: a flor e suas partes", topico:"Plantas com sementes (Angiospermas)",
+ texto:`<p>As <span class="destaque">angiospermas</span> também têm semente, mas trazem duas novidades <b>exclusivas</b> delas: a <span class="destaque">flor</span> e o <span class="destaque">fruto</span>. A flor é a estrutura onde acontece a reprodução.</p>
+ <p>As partes da flor: o <span class="destaque-azul">estame</span> (formado por <b>antera + filete</b>) é o órgão <b>masculino</b>; o <span class="destaque-azul">carpelo</span> é o órgão <b>feminino</b> e guarda o <b>ovário</b> e os <b>óvulos</b>. As <b>pétalas</b>, coloridas, servem para atrair os polinizadores; as <b>sépalas</b> (mais externas, quase sempre verdes) protegem o botão da flor.</p>
+ <p>O conjunto das partes masculinas se chama <span class="destaque">androceu</span>; o das partes femininas, <span class="destaque">gineceu</span>. Uma flor <b>monoica</b> (hermafrodita) tem os dois sexos na mesma flor; uma flor <b>dioica</b> tem só um dos sexos.</p>`,
+ q:[
+  {p:"Quais são as duas estruturas exclusivas das angiospermas?", tipo:"conc",
+   m:"A flor e o fruto.",
+   chk:["Citei a flor?","Citei o fruto?"]},
+  {p:"Numa flor, qual é o órgão masculino e qual é o feminino? Diga do que cada um é formado.", tipo:"aplic",
+   m:"O masculino é o estame (antera + filete); o feminino é o carpelo (que guarda o ovário e os óvulos).",
+   chk:["Estame = masculino (antera + filete)?","Carpelo = feminino (ovário/óvulos)?"]},
+  {p:"Uma flor tem partes masculinas E femininas na mesma flor. Como ela é chamada? E se tivesse só um dos sexos?", tipo:"aplic",
+   m:"Com os dois sexos é monoica (hermafrodita); com só um é dioica.",
+   chk:["Dois sexos = monoica/hermafrodita?","Um sexo = dioica?"]}]
+},
+{
+ setor:"Setor Botânico", t:"Angiospermas: reprodução e polinização", topico:"Plantas com sementes (Angiospermas)",
+ texto:`<p>Na reprodução das angiospermas, o grão de pólen chega ao <span class="destaque-azul">estigma</span> (o topo do carpelo), forma o <b>tubo polínico</b> e leva os gametas masculinos até o óvulo. Depois da fecundação, acontece uma troca importante: o <span class="destaque">óvulo vira semente</span> e o <span class="destaque">ovário vira fruto</span>.</p>
+ <p>A <span class="destaque">polinização</span> é o transporte do pólen da antera até o estigma. Ela pode ser por <b>agentes físicos</b> (vento ou água) — nesse caso as flores não têm perfume nem néctar, mas produzem muito pólen leve, como o milho e as gramíneas — ou por <b>animais</b> (abelhas, borboletas, aves, morcegos), que buscam néctar ou pólen e carregam o pólen de flor em flor (dá muito mais certo).</p>
+ <p>As flores de polinizadores <b>noturnos</b> (mariposas, morcegos) costumam ser claras e com cheiro forte à noite; as de polinizadores <b>diurnos</b> (abelhas, borboletas) são coloridas e perfumadas. É uma relação de <b>benefício para os dois lados</b> (coevolução). Atenção: as abelhas <i>Apis mellifera</i> são polinizadoras muito importantes, e o desaparecimento delas ameaça a produção de alimentos.</p>`,
+ q:[
+  {p:"O que é polinização?", tipo:"conc",
+   m:"É o transporte do grão de pólen da antera até o estigma da flor.",
+   chk:["Falei em transporte do pólen?","Falei de antera → estigma?"]},
+  {p:"Complete e explique: depois da fecundação, o óvulo vira ___ e o ovário vira ___.", tipo:"aplic",
+   m:"O óvulo vira semente e o ovário vira fruto.",
+   chk:["Óvulo → semente?","Ovário → fruto?"]},
+  {p:"Uma flor é colorida e perfumada; outra é sem graça, sem cheiro e solta muito pólen. Quem poliniza cada uma?", tipo:"aplic",
+   m:"A colorida e perfumada é polinizada por animais (abelhas, borboletas); a sem cheiro, com muito pólen, é polinizada pelo vento (agente físico).",
+   chk:["Colorida/perfumada = animais?","Sem cheiro/muito pólen = vento?"]}]
+},
+{
+ setor:"Setor Botânico", t:"Fruto, semente, germinação e dispersão", topico:"Plantas com sementes (Fruto, semente e dispersão)",
+ texto:`<p>O <span class="destaque">fruto</span> tem duas funções: <b>proteger a semente</b> e <b>ajudar a espalhá-la</b> (dispersão). Ele se forma do <b>ovário</b>; a parede do ovário vira o <span class="destaque-azul">pericarpo</span> (epicarpo por fora, mesocarpo no meio, endocarpo por dentro, coladinho na semente). Frutos <b>carnosos</b> têm o meio macio e suculento (manga, goiaba, abacate); frutos <b>secos</b> são duros ou fibrosos (a vagem do amendoim). O <span class="destaque">pseudofruto</span> (fruto falso) é quando a parte carnosa vem de <b>outra parte da flor</b>, não do ovário: no <b>caju</b>, a parte suculenta é pseudofruto e o fruto verdadeiro é a <b>castanha</b>; a <b>banana</b> também é pseudofruto (os pontinhos pretos são óvulos que não se desenvolveram).</p>
+ <p>A <span class="destaque">semente</span> vem do óvulo e tem três partes: <b>embrião</b>, <b>reserva de alimento</b> e <b>casca</b>. Na <span class="destaque-azul">germinação</span>, o embrião rompe a casca e cresce; para isso precisa de <b>água, temperatura certa, luz e oxigênio</b> (a maioria não germina abaixo de 5°C nem acima de 45°C). A <span class="destaque-azul">dormência</span> é quando a semente não germina mesmo em boas condições — fica "adormecida" por um tempo.</p>
+ <p>A <b>dispersão</b> pode ser pelo <b>vento</b> (o dente-de-leão tem estruturas leves tipo paraquedas), pela <b>água</b> (o coco-da-baía boia), ou por <b>animais</b> (frutos carnosos são comidos e as sementes saem nas fezes longe da planta; ou o carrapicho, que gruda nos pelos).</p>`,
+ q:[
+  {p:"Quais são as duas funções do fruto?", tipo:"conc",
+   m:"Proteger a semente e ajudar na dispersão (espalhar a semente para longe).",
+   chk:["Citei proteger a semente?","Citei a dispersão/espalhar?"]},
+  {p:"No caju, qual parte é o pseudofruto e qual é o fruto verdadeiro? Explique por que a parte suculenta é 'falsa'.", tipo:"aplic",
+   m:"A parte suculenta é o pseudofruto e a castanha é o fruto verdadeiro. Ela é 'falsa' porque não se formou do ovário, e sim de outra parte da flor.",
+   chk:["Suculenta = pseudofruto; castanha = fruto verdadeiro?","Expliquei que não veio do ovário?"]},
+  {p:"Uma semente de dente-de-leão tem estruturas leves parecidas com paraquedas. Que tipo de dispersão ela usa e por quê?", tipo:"aplic",
+   m:"Dispersão pelo vento, porque essas estruturas leves fazem a semente flutuar no ar e ser levada para longe.",
+   chk:["Disse dispersão pelo vento?","Liguei às estruturas leves/paraquedas?"]}]
+},
+{
+ setor:"Setor Invertebrados", t:"Poríferos e cnidários", topico:"Reprodução dos invertebrados",
+ texto:`<p>Os <span class="destaque">poríferos</span> são as <b>esponjas</b>, animais aquáticos. Eles se reproduzem de forma <b>assexuada</b> por fragmentação ou por <span class="destaque-azul">brotamento</span> (nasce um broto na parede do corpo, que vira um novo indivíduo, formando colônias) e também de forma <b>sexuada</b>, com gametas. Nesse caso a fecundação pode ser <b>externa</b> (na água) ou interna, e os ovos formam <b>larvas</b> que nadam livres e depois se fixam num lugar para virar adultas.</p>
+ <p>Os <span class="destaque">cnidários</span> (águas-vivas, corais, anêmonas) têm duas formas de corpo: a <span class="destaque-azul">medusa</span> (em forma de guarda-chuva, que <b>nada</b>) e o <span class="destaque-azul">pólipo</span> (um cilindro com tentáculos, que fica <b>fixo</b>). Eles se reproduzem de <b>três</b> jeitos: <b>assexuada</b> por brotamento (principalmente nos pólipos), <b>sexuada</b> (com gametas em gônadas temporárias) e por <span class="destaque">alternância de gerações</span> (o pólipo faz a parte assexuada e a medusa faz a sexuada).</p>
+ <p>Muitos animais têm <span class="destaque-azul">regeneração</span> (recuperar partes do corpo), como a hidra e a estrela-do-mar. Quando a regeneração chega a gerar novos indivíduos, ela funciona como reprodução assexuada.</p>`,
+ q:[
+  {p:"O que é brotamento?", tipo:"conc",
+   m:"É uma reprodução assexuada em que nasce um broto no corpo do animal e esse broto se torna um novo indivíduo.",
+   chk:["Falei que é reprodução assexuada?","Falei do broto que vira novo indivíduo?"]},
+  {p:"Explique a diferença entre a medusa e o pólipo dos cnidários.", tipo:"aplic",
+   m:"A medusa tem forma de guarda-chuva e nada livremente; o pólipo tem forma de cilindro com tentáculos e fica fixo num lugar.",
+   chk:["Medusa = nada / guarda-chuva?","Pólipo = fixo / cilindro?"]},
+  {p:"Na alternância de gerações dos cnidários, qual forma faz a reprodução sexuada e qual faz a assexuada?", tipo:"aplic",
+   m:"A medusa faz a reprodução sexuada e o pólipo faz a assexuada (por brotamento).",
+   chk:["Medusa = sexuada?","Pólipo = assexuada?"]}]
+},
+{
+ setor:"Setor Invertebrados", t:"Platelmintos, nematódeos e a verminose", topico:"Reprodução dos invertebrados",
+ texto:`<p>Os <span class="destaque">platelmintos</span> têm corpo mole e <b>achatado</b>; podem ser de vida livre ou parasitas. As <b>planárias</b> fazem <span class="destaque-azul">fecundação cruzada</span> (dois indivíduos trocam espermatozoides entre si) e têm grande poder de <b>regeneração</b> — cortadas ao meio, se regeneram.</p>
+ <p>Os <span class="destaque">nematódeos</span> têm corpo <b>cilíndrico</b> e alongado. A maioria é <b>dioica</b> (sexos separados em indivíduos diferentes) e apresenta <span class="destaque-azul">dimorfismo sexual</span> (macho e fêmea têm aparências diferentes); a fecundação é <b>interna</b>. Um exemplo é a lombriga (<i>Ascaris lumbricoides</i>).</p>
+ <p><span class="destaque">Verminose</span> é a doença causada por platelmintos e nematódeos parasitas. No ciclo da lombriga, a pessoa engole os ovos, as larvas furam o intestino, caem no sangue, chegam aos pulmões, sobem pela garganta, são engolidas de novo e voltam ao intestino, onde viram adultas e produzem ovos que saem nas <b>fezes</b>. A prevenção é <b>higiene e saneamento básico</b>. Alguns parasitas usam <b>hospedeiro intermediário e definitivo</b> (na tênia, o porco ou o boi é o intermediário e o ser humano é o definitivo).</p>`,
+ q:[
+  {p:"O que é fecundação cruzada?", tipo:"conc",
+   m:"É quando dois indivíduos trocam espermatozoides entre si para se fecundarem.",
+   chk:["Falei em dois indivíduos?","Falei que trocam espermatozoides?"]},
+  {p:"O que é dimorfismo sexual? Cite um grupo de invertebrados que tem isso.", tipo:"aplic",
+   m:"É quando o macho e a fêmea têm aparências físicas diferentes. Acontece, por exemplo, nos nematódeos (como a lombriga).",
+   chk:["Expliquei que macho e fêmea têm aparências diferentes?","Liguei aos nematódeos/lombriga?"]},
+  {p:"Como a higiene e o saneamento básico ajudam a evitar a verminose da lombriga? Pense no ciclo dela.", tipo:"aplic",
+   m:"Porque os ovos da lombriga saem nas fezes; com higiene e saneamento a pessoa evita engolir esses ovos, quebrando o ciclo do parasita.",
+   chk:["Liguei os ovos às fezes?","Expliquei que evita engolir os ovos / quebra o ciclo?"]}]
+},
+{
+ setor:"Setor Invertebrados", t:"Moluscos, anelídeos, artrópodes e equinodermos", topico:"Reprodução dos invertebrados",
+ texto:`<p>Os <span class="destaque">moluscos</span> (caramujos, polvos, lulas) têm reprodução <b>sexuada</b>; há espécies de sexos separados e hermafroditas. Os cefalópodes (polvos e lulas) fazem <b>cópula</b>: o macho passa cápsulas de gametas usando um tentáculo modificado.</p>
+ <p>Os <span class="destaque">anelídeos</span> têm o corpo dividido em anéis (minhocas, sanguessugas, poliquetos). As minhocas e sanguessugas têm o <span class="destaque-azul">clitelo</span> (aquele anel mais claro), são <b>hermafroditas</b> e fazem <b>fecundação cruzada</b>: o clitelo forma um <b>casulo de muco</b> onde acontece a fecundação; o casulo com os ovos é solto e nascem filhotes parecidos com os adultos.</p>
+ <p>Os <span class="destaque">artrópodes</span> são o <b>maior grupo</b> de animais (insetos, aracnídeos, crustáceos). Os aracnídeos têm sexos separados, fecundação interna, e as aranhas põem ovos em <b>ootecas</b> de seda; escorpiões podem ser vivíparos e ter <span class="destaque-azul">partenogênese</span> (o óvulo se desenvolve sem fecundação). Os <b>insetos</b> têm fecundação interna e passam por <span class="destaque-azul">metamorfose</span>: <b>incompleta</b> (ovo → ninfa, parecida com o adulto mas sem asas → adulto; ex.: barata, gafanhoto) ou <b>completa</b> (ovo → larva → pupa → adulto; ex.: borboleta). Já os <span class="destaque">equinodermos</span> (estrela-do-mar) fazem reprodução <b>assexuada</b> por regeneração de pedaços com parte do disco central, e <b>sexuada</b> com sexos separados e fecundação externa na água.</p>`,
+ q:[
+  {p:"O que é partenogênese?", tipo:"conc",
+   m:"É quando o óvulo se desenvolve em um novo indivíduo sem precisar de fecundação.",
+   chk:["Falei que é sem fecundação?","Falei que o óvulo se desenvolve sozinho?"]},
+  {p:"Compare a metamorfose completa e a incompleta dos insetos, com um exemplo de cada.", tipo:"aplic",
+   m:"Na incompleta o ovo vira ninfa (parecida com o adulto, mas sem asas) e depois adulto (ex.: gafanhoto, barata). Na completa passa por ovo → larva → pupa → adulto (ex.: borboleta).",
+   chk:["Incompleta = ovo→ninfa→adulto (com exemplo)?","Completa = ovo→larva→pupa→adulto (com exemplo)?"]},
+  {p:"Numa minhoca, para que serve o clitelo na reprodução?", tipo:"aplic",
+   m:"O clitelo forma um casulo de muco onde acontece a fecundação e ficam os ovos; depois o casulo é solto e nascem os filhotes.",
+   chk:["Liguei o clitelo ao casulo?","Falei que é onde ocorre a fecundação / ficam os ovos?"]}]
+},
+{
+ setor:"Setor Vertebrados", t:"Peixes e anfíbios", topico:"Reprodução dos vertebrados",
+ texto:`<p>Os <span class="destaque">vertebrados</span> são peixes, anfíbios, répteis, aves e mamíferos. Nos <span class="destaque-azul">peixes</span> a reprodução é sexuada; na maioria (os ósseos) a fecundação é <b>externa</b>, na água, e eles soltam <b>milhares de ovos</b> — são <b>ovíparos</b> (põem ovos no ambiente). Alguns peixes cartilaginosos (como certos tubarões) são <b>vivíparos</b> (o embrião se desenvolve dentro da fêmea) ou <b>ovovivíparos</b> (os ovos ficam dentro da fêmea e depois os filhotes são soltos). A larva do peixe se chama <b>alevino</b>. Existe o <span class="destaque">defeso</span>, período em que a pesca é <b>proibida</b> na época de reprodução, para os peixes se reproduzirem.</p>
+ <p>Os <span class="destaque-azul">anfíbios</span> (sapos, rãs) são a "ponte" entre a água e a terra: ainda <b>dependem da água</b> para se reproduzir. A maioria é <b>ovípara</b>, com fecundação <b>externa</b> e desenvolvimento <b>indireto</b> (a larva é o <span class="destaque">girino</span>). No <b>abraço nupcial</b>, o macho segura a fêmea; ela solta os óvulos numa massa gelatinosa e o macho solta os espermatozoides, que os fecundam.</p>
+ <p>Os ovos eclodem e nascem os <b>girinos</b> (que respiram por brânquias e têm cauda). Na <span class="destaque-azul">metamorfose</span>, surgem pernas e pulmões e a cauda vai sumindo, até virar o <b>sapo adulto</b>, que vive na terra.</p>`,
+ q:[
+  {p:"Qual a diferença entre um animal ovíparo, um vivíparo e um ovovivíparo?", tipo:"conc",
+   m:"Ovíparo põe ovos no ambiente; vivíparo tem o embrião se desenvolvendo dentro da fêmea; ovovivíparo tem ovos que ficam dentro da fêmea e só depois os filhotes saem.",
+   chk:["Ovíparo = põe ovos no ambiente?","Vivíparo = embrião dentro da fêmea?","Ovovivíparo = ovo dentro da fêmea, filhote sai depois?"]},
+  {p:"Um girino respira por brânquias e tem cauda; o sapo adulto respira por pulmões e não tem cauda. Que processo explica essa mudança?", tipo:"aplic",
+   m:"A metamorfose — o desenvolvimento indireto em que o girino vai se transformando aos poucos até virar sapo adulto.",
+   chk:["Nomeei a metamorfose?","Falei que é uma transformação (desenvolvimento indireto) do girino para o adulto?"]},
+  {p:"Por que existe o defeso e como ele ajuda os peixes?", tipo:"aplic",
+   m:"O defeso proíbe a pesca na época de reprodução, dando tempo para os peixes se reproduzirem e manterem a população.",
+   chk:["Falei que proíbe a pesca na época de reprodução?","Falei que ajuda a manter/renovar a população de peixes?"]}]
+},
+{
+ setor:"Setor Vertebrados", t:"Répteis e aves: o ovo amniótico", topico:"Reprodução dos vertebrados",
+ texto:`<p>Répteis e aves são <span class="destaque">amniotas</span>: eles têm o <span class="destaque">ovo amniótico</span>, uma grande novidade que permitiu a reprodução <b>longe da água</b>. Esse ovo tem uma <b>casca porosa</b> (deixa passar gases, mas protege contra a perda de água) e várias membranas: o <span class="destaque-azul">âmnio</span> (envolve o embrião e o protege do ressecamento e de choques), o <span class="destaque-azul">saco vitelínico</span> (guarda a reserva de alimento), o <b>cório</b> (envolve e protege as estruturas internas), o <b>alantoide</b> (guarda excretas e ajuda nas trocas de gases) e o <b>albúmen</b> (a "clara", com água e proteção mecânica).</p>
+ <p>Nos <span class="destaque-azul">répteis</span> a fecundação é <b>interna</b>; muitos são ovíparos e põem ovos em tocas ou na areia, e alguns cuidam do ninho (como os jacarés). Existem também répteis <b>ovovivíparos</b> (casca fina, embrião se desenvolve dentro da fêmea) e <b>vivíparos</b>.</p>
+ <p>As <span class="destaque-azul">aves</span> também são amniotas, com fecundação interna e são <b>ovíparas</b>; o ovo tem casca <b>dura e impermeável</b>, feita de <span class="destaque">carbonato de cálcio</span>. Os machos atraem as fêmeas com cantos, danças, voos e penas coloridas. Nas aves é comum o <span class="destaque">cuidado parental</span>: elas fazem <b>ninhos</b>, chocam (aquecem) os ovos e protegem e alimentam os filhotes — o que aumenta muito a chance de sobrevivência (ex.: o pinguim-imperador, em que o casal se reveza).</p>`,
+ q:[
+  {p:"Por que o ovo amniótico foi tão importante para répteis e aves?", tipo:"conc",
+   m:"Porque ele protege o embrião contra a perda de água e permite que a reprodução aconteça longe da água, em terra firme.",
+   chk:["Falei que protege contra a perda de água?","Falei que permitiu a reprodução fora da água?"]},
+  {p:"No ovo amniótico, para que serve o saco vitelínico e para que serve o âmnio?", tipo:"aplic",
+   m:"O saco vitelínico guarda a reserva de alimento do embrião; o âmnio envolve o embrião e o protege do ressecamento e de choques.",
+   chk:["Saco vitelínico = reserva de alimento?","Âmnio = protege o embrião (ressecamento/choques)?"]},
+  {p:"O que é cuidado parental e como ele ajuda os filhotes das aves a sobreviver?", tipo:"aplic",
+   m:"É o cuidado dos pais com os filhotes: fazer ninho, chocar os ovos, proteger e alimentar. Isso aumenta a chance de os filhotes sobreviverem.",
+   chk:["Expliquei o que é (fazer ninho/chocar/proteger/alimentar)?","Liguei ao aumento da sobrevivência dos filhotes?"]}]
+},
+{
+ setor:"Setor Vertebrados", t:"Mamíferos: placenta e cuidado com a cria", topico:"Reprodução dos vertebrados",
+ texto:`<p>Nos <span class="destaque">mamíferos</span> a fecundação é <b>interna</b> e, na maioria das espécies, o embrião se desenvolve <b>dentro do corpo da fêmea</b>. Depois que nascem, os filhotes são alimentados com <span class="destaque">leite materno</span>, produzido pelas <span class="destaque-azul">glândulas mamárias</span> das fêmeas. Os machos costumam <b>participar dos cuidados</b> com a prole.</p>
+ <p>Uma estrutura <b>exclusiva</b> desse grupo é a <span class="destaque">placenta</span>. No começo do desenvolvimento da maioria dos mamíferos, ela passa <b>gás oxigênio e nutrientes</b> do sangue da <b>mãe</b> direto para o sangue do embrião; no caminho de volta, recebe do feto o <b>gás carbônico e as excretas</b>.</p>
+ <p>Existem <b>três grupos</b> de mamíferos. Os <span class="destaque-azul">placentários</span> desenvolvem o embrião no <b>útero</b>, com placenta bem desenvolvida; o embrião é envolvido pelo <b>âmnio</b> e ligado à placenta pelo <b>cordão umbilical</b>. A gestação é relativamente longa e varia com o animal (rato ~21 dias, cão e gato ~60 dias, elefante ~22 meses); o ser humano é um exemplo. Os <span class="destaque-azul">marsupiais</span> também desenvolvem o embrião no útero, mas a placenta é <b>pouco desenvolvida</b>: a gestação é <b>curta</b> e os filhotes nascem <b>muito imaturos</b> (poucos centímetros). Eles migram para a <b>bolsa marsupial</b> (o marsúpio), onde ficam as glândulas mamárias e o desenvolvimento se completa (ex.: a cuíca-graciosa).</p>
+ <p>Os <span class="destaque-azul">monotremados</span> são mamíferos <b>não placentários</b> e <b>ovíparos</b>: o desenvolvimento acontece dentro de <b>ovos</b> (parecidos com os de répteis e aves). Hoje existem só o <b>ornitorrinco</b> (semiaquático, com bico de pato) e as <b>equidnas</b> (terrestres, com pelos e espinhos), da Austrália. Como as fêmeas <b>não têm mamas</b>, os filhotes <b>lambem</b> o leite que escorre pelo corpo da mãe.</p>`,
+ q:[
+  {p:"O que é a placenta e para que ela serve nos mamíferos?", tipo:"conc",
+   m:"É uma estrutura exclusiva dos mamíferos que passa gás oxigênio e nutrientes do sangue da mãe para o embrião e, no sentido inverso, recebe do feto o gás carbônico e as excretas.",
+   chk:["Falei que passa oxigênio/nutrientes da mãe para o embrião?","Falei que leva de volta o gás carbônico/excretas?"]},
+  {p:"Classifique cada um no grupo de mamífero certo: um cão; um ornitorrinco que bota ovos; a cuíca, cujo filhote termina de crescer numa bolsa.", tipo:"aplic",
+   m:"O cão é placentário; o ornitorrinco é monotremado (ovíparo); a cuíca é marsupial.",
+   chk:["Cão = placentário?","Ornitorrinco = monotremado (ovíparo)?","Cuíca = marsupial?"]},
+  {p:"Por que os filhotes dos monotremados lambem o leite do corpo da mãe, em vez de mamar?", tipo:"aplic",
+   m:"Porque as fêmeas dos monotremados não têm mamas; o leite escorre pelo corpo e os filhotes o lambem.",
+   chk:["Falei que não têm mamas?","Falei que lambem o leite que escorre pelo corpo?"]}]
+}
+];
+
+const PEGADINHAS = [
+ "<b>Gimnosperma</b> TEM semente (nua, sem fruto). Só a <b>angiosperma</b> tem fruto. Não diga que gimnosperma não tem semente.",
+ "Nas gimnospermas quem leva o pólen é o <b>vento</b>, e a reprodução <b>NÃO depende de água</b> (por causa do tubo polínico).",
+ "<b>Estame</b> (antera + filete) = masculino; <b>carpelo</b> = feminino. Gineceu = feminino; androceu = masculino. Não troque.",
+ "Depois da fecundação: <b>óvulo → semente</b> e <b>ovário → fruto</b>. Muita gente inverte isso.",
+ "Flor <b>MONOICA</b> (hermafrodita) = tem os dois sexos na mesma flor; <b>DIOICA</b> = só um sexo.",
+ "<b>Pseudofruto</b>: no caju a parte suculenta é FALSA; o fruto verdadeiro é a <b>castanha</b>. A banana também é pseudofruto.",
+ "Cnidários: a <b>medusa NADA</b> e faz a parte sexuada; o <b>pólipo é FIXO</b> e faz brotamento (assexuada).",
+ "<b>Platelminto = corpo achatado</b>; <b>nematódeo = corpo cilíndrico</b>. A lombriga é nematódeo.",
+ "Nos peixes ósseos a fecundação é <b>externa</b>; a larva é o <b>alevino</b>. Nos anfíbios a larva é o <b>girino</b>.",
+ "Répteis e aves são <b>AMNIOTAS</b> (ovo amniótico). O ovo das <b>aves</b> tem casca dura de <b>carbonato de cálcio</b>.",
+ "Mamíferos: <b>placentários</b> (útero + placenta), <b>marsupiais</b> (bolsa/marsúpio) e <b>monotremados</b> (ovíparos: ornitorrinco e equidna). Sim, monotremado <b>põe ovo</b>!"
+];
+
+/* =================== SALVAMENTO =================== */
+const KEY='ciencias8_sj_reproducao_leituraguiada_v1';
+let estado={resp:{}, chk:{}, conferido:{}, transcrita:{}, tentou:{}, ts:null};
+let mem={};
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return mem[k]||null;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){mem[k]=v;}}
+function lsDel(k){try{localStorage.removeItem(k);}catch(e){delete mem[k];}}
+function carregar(){try{const s=lsGet(KEY);if(s)estado=JSON.parse(s);}catch(e){}}
+function salvar(){estado.ts=new Date().toISOString();lsSet(KEY,JSON.stringify(estado));pintarInfo();}
+function pintarInfo(){const el=document.getElementById('saveinfo');
+  if(estado.ts){const d=new Date(estado.ts);
+    el.innerHTML='💾 Último salvamento: <b>'+d.toLocaleDateString('pt-BR')+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'</b>';}
+  else el.textContent='Seu progresso é salvo sozinho neste navegador.';}
+
+/* =================== MODAL =================== */
+function modalConfirm(html, onSim, txtSim, txtNao){
+  document.getElementById('modalTxt').innerHTML=html;
+  const ac=document.getElementById('modalAcoes');ac.innerHTML='';
+  const b1=document.createElement('button');b1.className='ghost';b1.textContent=txtNao||'Cancelar';
+  b1.onclick=()=>{document.getElementById('modalBg').classList.remove('on');};
+  const b2=document.createElement('button');b2.textContent=txtSim||'Confirmar';
+  b2.onclick=()=>{document.getElementById('modalBg').classList.remove('on');onSim&&onSim();};
+  ac.appendChild(b1);ac.appendChild(b2);
+  document.getElementById('modalBg').classList.add('on');
+}
+function modalInfo(html){
+  document.getElementById('modalTxt').innerHTML=html;
+  const ac=document.getElementById('modalAcoes');ac.innerHTML='';
+  const b=document.createElement('button');b.textContent='Ok';
+  b.onclick=()=>{document.getElementById('modalBg').classList.remove('on');};
+  ac.appendChild(b);document.getElementById('modalBg').classList.add('on');
+}
+
+/* =================== ANTICÓPIA =================== */
+function normaliza(s){return (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
+  .replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim().split(' ').filter(Boolean);}
+function maiorSequenciaComum(a,b){
+  let best=[];const m=a.length,n=b.length;const dp=Array(n+1).fill(0);
+  for(let i=1;i<=m;i++){let prev=0;for(let j=1;j<=n;j++){const tmp=dp[j];
+    if(a[i-1]===b[j-1]){dp[j]=prev+1;if(dp[j]>best.length)best=a.slice(i-dp[j],i);}else dp[j]=0;prev=tmp;}}
+  return best;
+}
+function contemSequencia(hay,seq){ if(!seq.length)return false;
+  for(let i=0;i+seq.length<=hay.length;i++){let ok=true;for(let k=0;k<seq.length;k++){if(hay[i+k]!==seq[k]){ok=false;break;}}if(ok)return true;}return false;}
+function ehTranscricao(resp, textoBloco, enunciado){
+  const a=normaliza(resp), b=normaliza(textoBloco), q=normaliza(enunciado);
+  if(a.length<4) return false;
+  let seq=maiorSequenciaComum(a,b);
+  if(seq.length>=4 && contemSequencia(q,seq)){
+    return false;
+  }
+  if(seq.length>=8) return true;
+  if(seq.length>=5 && (seq.length/a.length)>0.6) return true;
+  return false;
+}
+
+/* =================== RENDER =================== */
+function textoPlano(html){const d=document.createElement('div');d.innerHTML=html;return d.textContent||'';}
+function render(){
+  const cont=document.getElementById('blocos');cont.innerHTML='';
+  BLOCOS.forEach((b,i)=>{
+    const conferido=!!estado.conferido[i];
+    const liberado = i===0 || !!estado.conferido[i-1];
+    const div=document.createElement('div');
+    div.className='bloco'+(liberado?'':' travado');div.id='bloco'+i;
+    let qhtml='';
+    b.q.forEach((q,j)=>{
+      const val=(estado.resp[i]&&estado.resp[i][j])?estado.resp[i][j]:'';
+      const red=!!(estado.transcrita[i]&&estado.transcrita[i][j]);
+      let chkHtml='';
+      q.chk.forEach((c,k)=>{
+        const cv=(estado.chk[i]&&estado.chk[i][j]&&estado.chk[i][j][k])?estado.chk[i][j][k]:'';
+        chkHtml+=`<div class="cq">• ${c}
+          <label class="sim"><input type="radio" name="chk${i}_${j}_${k}" ${cv==='sim'?'checked':''} onchange="setChk(${i},${j},${k},'sim')"> Sim</label>
+          <label class="nao"><input type="radio" name="chk${i}_${j}_${k}" ${cv==='nao'?'checked':''} onchange="setChk(${i},${j},${k},'nao')"> Ainda não</label></div>`;
+      });
+      qhtml+=`<div class="qbox${red?' red':''}" id="qbox${i}_${j}">
+        <div class="pergunta">${j+1}. ${q.p}<span class="tipo ${q.tipo}">${q.tipo==='conc'?'conceito':'aplicação'}</span></div>
+        <textarea data-b="${i}" data-q="${j}" oninput="onResp(${i},${j},this.value)" ${conferido?'disabled':''} placeholder="Escreva com as suas palavras...">${val.replace(/</g,'&lt;')}</textarea>
+        <div class="avisocopia" id="aviso${i}_${j}">✍️ Boa parte da sua resposta está igual ao texto. Tente reescrever com as <b>suas palavras</b>, como se explicasse para um amigo, sem olhar o texto. Pode ficar mais curtinho — o que vale é ser SEU.</div>
+        <div class="marcavermelha" id="marca${i}_${j}">🔴 Esta resposta ficou muito parecida com o texto. Reescreva com as suas palavras quando puder — a marca some sozinha.</div>
+        <div class="modelo" id="mod${i}_${j}"><b>Resposta modelo:</b> ${q.m}</div>
+        <div class="checkbox-modelo" id="ckbox${i}_${j}"><div style="color:var(--muted);font-size:.85rem;margin-bottom:4px">A minha resposta disse que...</div>${chkHtml}</div>
+      </div>`;
+    });
+    div.innerHTML=`
+      ${liberado?'':'<div class="lock">🔒 módulo trancado</div>'}
+      <h2><span class="num">${i+1}</span><span><span class="setor">${b.setor}</span>${b.t}</span></h2>
+      <div class="conteudo">
+        <div class="texto">${b.texto}</div>
+        ${qhtml}
+        <div class="acoes">
+          <button id="btn${i}" onclick="conferir(${i})" ${conferido?'disabled':''}>✅ Conferir respostas</button>
+          <span class="feito" id="feito${i}">Módulo conferido ✓</span>
+          <span class="status-bloco" id="status${i}"></span>
+        </div>
+      </div>`;
+    cont.appendChild(div);
+    if(conferido) mostrarConferido(i);
+  });
+  atualizarBotoes();atualizarProgresso();pintarInfo();checarFinal();
+}
+function onResp(i,j,v){
+  estado.resp[i]=estado.resp[i]||{};estado.resp[i][j]=v;
+  if(estado.transcrita[i]&&estado.transcrita[i][j]){
+    if(!ehTranscricao(v,textoPlano(BLOCOS[i].texto),BLOCOS[i].q[j].p)){
+      estado.transcrita[i][j]=false;
+      const qb=document.getElementById('qbox'+i+'_'+j);if(qb)qb.classList.remove('red');
+      const mk=document.getElementById('marca'+i+'_'+j);if(mk)mk.classList.remove('on');
+    }
+  }
+  atualizarBotoes();salvar();
+}
+function setChk(i,j,k,v){
+  estado.chk[i]=estado.chk[i]||{};estado.chk[i][j]=estado.chk[i][j]||{};estado.chk[i][j][k]=v;
+  salvar();atualizarStatus(i);checarFinal();
+}
+function todasPreenchidas(i){
+  const b=BLOCOS[i];
+  for(let j=0;j<b.q.length;j++){const v=(estado.resp[i]&&estado.resp[i][j])?estado.resp[i][j].trim():'';if(v.length<3)return false;}
+  return true;
+}
+function atualizarBotoes(){
+  BLOCOS.forEach((b,i)=>{const btn=document.getElementById('btn'+i);
+    if(btn&&!estado.conferido[i])btn.disabled=!todasPreenchidas(i);});
+}
+function conferir(i){
+  if(!todasPreenchidas(i))return;
+  let travou=false;
+  BLOCOS[i].q.forEach((q,j)=>{
+    const resp=(estado.resp[i]&&estado.resp[i][j])||'';
+    const aviso=document.getElementById('aviso'+i+'_'+j);
+    if(aviso)aviso.classList.remove('on');
+    const copia=ehTranscricao(resp,textoPlano(BLOCOS[i].texto),q.p);
+    estado.tentou[i]=estado.tentou[i]||{};
+    if(copia){
+      const jaTentou=!!(estado.tentou[i]&&estado.tentou[i][j]);
+      if(!jaTentou){
+        estado.tentou[i][j]=resp;
+        if(aviso)aviso.classList.add('on');
+        travou=true;
+      }else{
+        estado.transcrita[i]=estado.transcrita[i]||{};estado.transcrita[i][j]=true;
+      }
+    }
+  });
+  salvar();
+  if(travou){
+    modalInfo('<p>✍️ Quase lá! Uma ou mais respostas ficaram muito parecidas com o texto. Reescreva com as suas palavras e clique em <b>Conferir</b> de novo.</p>');
+    return;
+  }
+  estado.conferido[i]=true;salvar();render();
+  const prox=document.getElementById('bloco'+(i+1));
+  if(prox)prox.scrollIntoView({behavior:'smooth',block:'start'});
+  else document.getElementById('finalTrancado').scrollIntoView({behavior:'smooth'});
+}
+function mostrarConferido(i){
+  BLOCOS[i].q.forEach((q,j)=>{
+    const m=document.getElementById('mod'+i+'_'+j);if(m)m.style.display='block';
+    const c=document.getElementById('ckbox'+i+'_'+j);if(c)c.style.display='block';
+    if(estado.transcrita[i]&&estado.transcrita[i][j]){
+      const qb=document.getElementById('qbox'+i+'_'+j);if(qb)qb.classList.add('red');
+      const mk=document.getElementById('marca'+i+'_'+j);if(mk)mk.classList.add('on');
+    }
+  });
+  const f=document.getElementById('feito'+i);if(f)f.style.display='inline';
+  const btn=document.getElementById('btn'+i);if(btn){btn.disabled=true;btn.textContent='✅ Conferido';}
+  atualizarStatus(i);
+}
+function atualizarStatus(i){
+  if(!estado.conferido[i])return;
+  const st=document.getElementById('status'+i);if(!st)return;
+  let temNao=false, red=false;
+  BLOCOS[i].q.forEach((q,j)=>{
+    if(estado.transcrita[i]&&estado.transcrita[i][j])red=true;
+    q.chk.forEach((c,k)=>{const v=estado.chk[i]&&estado.chk[i][j]&&estado.chk[i][j][k];if(v==='nao')temNao=true;});
+  });
+  st.style.display='inline';
+  if(temNao||red){st.className='status-bloco rev';st.textContent='🔁 revisar este módulo';}
+  else{st.className='status-bloco ok';st.textContent='✅ tudo certo!';}
+}
+function atualizarProgresso(){
+  const n=Object.keys(estado.conferido).filter(k=>estado.conferido[k]).length;
+  document.getElementById('fill').style.width=(n/BLOCOS.length*100)+'%';
+  document.getElementById('progtxt').textContent='Módulo '+n+' de '+BLOCOS.length+' concluídos';
+}
+function checarFinal(){
+  const todos=BLOCOS.every((b,i)=>estado.conferido[i]);
+  document.getElementById('finalTrancado').style.display=todos?'none':'block';
+  document.getElementById('parabens').style.display=todos?'block':'none';
+  document.getElementById('pegadinhasBox').innerHTML= todos?pegadinhasHTML():'';
+  document.getElementById('coberturaBox').innerHTML= todos?coberturaHTML():'';
+  document.getElementById('revisarBox').innerHTML= todos?revisarHTML():'';
+}
+function pegadinhasHTML(){
+  const li=PEGADINHAS.map(p=>'<li>'+p+'</li>').join('');
+  return `<div class="pegadinhas"><h2>⚠️ Pegadinhas que mais derrubam na prova</h2><ol>${li}</ol></div>`;
+}
+function coberturaHTML(){
+  const map={};BLOCOS.forEach((b,i)=>{map[b.topico]=map[b.topico]||[];map[b.topico].push(i+1);});
+  let linhas=Object.keys(map).map(t=>`<tr><td>${t}</td><td>Módulo(s) ${map[t].join(', ')}</td></tr>`).join('');
+  return `<div class="cobertura"><h2>🗺️ Cobertura — o que cada tópico da prova tem aqui</h2>
+    <table><tr><th>Tópico da prova</th><th>Onde estudar</th></tr>${linhas}</table></div>`;
+}
+function revisarHTML(){
+  let itens=[];
+  BLOCOS.forEach((b,i)=>{
+    let red=false,nao=false;
+    b.q.forEach((q,j)=>{
+      if(estado.transcrita[i]&&estado.transcrita[i][j])red=true;
+      q.chk.forEach((c,k)=>{const v=estado.chk[i]&&estado.chk[i][j]&&estado.chk[i][j][k];if(v==='nao')nao=true;});
+    });
+    if(red||nao) itens.push('Módulo '+(i+1)+' — '+b.t+(red?' (resposta copiada 🔴)':'')+(nao?' (marcou "ainda não")':''));
+  });
+  if(!itens.length) return `<div class="revisar-final"><h2>🌟 Autoavaliação</h2><p style="color:var(--green)">Você marcou tudo como certo e não copiou o texto. Ótimo! Pode seguir para o Quiz.</p></div>`;
+  return `<div class="revisar-final"><h2>📌 Para revisar antes da prova</h2><ul>${itens.map(x=>'<li>'+x+'</li>').join('')}</ul></div>`;
+}
+
+/* =================== EXPORTAR / IMPORTAR / ZERAR =================== */
+function exportar(){
+  const out={leitura:estado};
+  const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='progresso-leitura-guiada-ciencias8.json';a.click();
+}
+function importar(ev){
+  const f=ev.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const o=JSON.parse(r.result);
+    if(o.leitura){estado=o.leitura;}else{estado=o;}
+    salvar();render();modalInfo('<p>✅ Progresso importado!</p>');}
+    catch(e){modalInfo('<p>Arquivo inválido.</p>');}};
+  r.readAsText(f);
+}
+function zerar(){
+  modalConfirm('<p><b>Zerar tudo?</b></p><p>Isso apaga todas as respostas, para outra criança usar do zero.</p>',
+    ()=>{estado={resp:{},chk:{},conferido:{},transcrita:{},tentou:{},ts:null};lsDel(KEY);render();modalInfo('<p>🗑️ Tudo zerado!</p>');},'Sim, zerar','Cancelar');
+}
+
+/* =================== START =================== */
+carregar();render();
+</script>
+</body>
+</html>

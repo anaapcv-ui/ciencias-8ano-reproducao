@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulado — Ciências 8º ano (São José) · BIOARCA</title>
+<style>
+  :root{--bg:#0a0714;--panel:#161027;--panel2:#100b1f;--line:#2d2352;--green:#5eead4;--green2:#0f9b86;
+    --blue:#818cf8;--txt:#f0edfb;--muted:#a99fce;--yellow:#fcd34d;--red:#fb5a6f;--grey:#8b83a8;--magenta:#f472b6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(900px 520px at 8% -8%,#3b076455,transparent),radial-gradient(820px 480px at 98% 0%,#0d948866,transparent),var(--bg);
+    color:var(--txt);font-family:'Segoe UI',system-ui,Arial,sans-serif;font-size:18px;line-height:1.6}
+  .wrap{max-width:860px;margin:0 auto;padding:14px 16px 90px}
+  header{position:relative;border-radius:16px 16px 0 0;background:linear-gradient(120deg,#12103a,#1e1b4b);border:1px solid #3a357a;border-bottom:none;padding:22px 22px 18px}
+  header h1{margin:.1em 0;font-size:1.55rem} header p{margin:.2em 0;color:#d6d3ff}
+  .barra-vermelha{height:8px;background:linear-gradient(90deg,var(--red),#b3163b);border-radius:0 0 4px 4px;margin-bottom:16px;border:1px solid #6d2333;border-top:none}
+  .chip{display:inline-block;background:#1e1b4b;border:1px solid var(--red);color:#ffd7e0;font-size:.76rem;font-weight:700;padding:4px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.5px}
+  .cabec{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:16px;font-size:.92rem;color:var(--muted)}
+  .cabec b{color:var(--txt)}
+  .salvar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:16px}
+  .salvar .info{color:var(--muted);font-size:.85rem;flex:1 1 200px}
+  button{font-family:inherit;cursor:pointer;border:none;border-radius:10px;padding:9px 14px;font-size:.92rem;font-weight:700;color:#0a0714;background:linear-gradient(90deg,var(--green),#7bf0dd)}
+  button.ghost{background:#22183f;color:var(--txt);border:1px solid var(--line)}
+  button.vermelho{background:linear-gradient(90deg,var(--red),#c81e43);color:#fff}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  .q{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 18px 14px;margin-bottom:14px}
+  .q .num{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:8px;font-weight:800;margin-right:8px;background:linear-gradient(135deg,#1e1b4b,#3a357a);color:#d6d3ff}
+  .q .val{float:right;color:var(--muted);font-size:.8rem;font-weight:700}
+  .badge{display:inline-block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;padding:2px 8px;border-radius:999px;margin-left:6px;background:#2a1a3a;color:#e9c8ff;border:1px solid #5a3a7a}
+  .enun{font-weight:700;color:#f6f2ff;margin-bottom:10px}
+  .afirm{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin:8px 0;font-weight:500}
+  .afirm div{margin:4px 0}
+  .afirm .cod{display:inline-block;font-weight:800;color:var(--magenta);width:34px}
+  .alt{display:block;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:11px 13px;margin:7px 0;cursor:pointer;transition:.15s}
+  .alt:hover{border-color:var(--blue)}
+  .alt.sel{border-color:var(--green);background:#0a2c26}
+  .alt .letra{font-weight:800;color:var(--blue);margin-right:8px}
+  .alt.correta{border-color:var(--green);background:#0a2c26}
+  .alt.errada-sel{border-color:var(--red);background:#22121599}
+  .alt.cinza{opacity:.75}
+  textarea{width:100%;min-height:90px;resize:vertical;background:var(--panel2);border:1px solid var(--line);border-radius:10px;color:var(--txt);padding:10px 12px;font-family:inherit;font-size:.95rem}
+  textarea:focus{outline:2px solid var(--blue);border-color:var(--blue)}
+  .modelo-disc{display:none;margin-top:10px;background:#0a2c26;border:1px solid #12715f;border-radius:10px;padding:10px 13px;font-size:.92rem}
+  .modelo-disc.on{display:block}.modelo-disc b{color:var(--green)}
+  .exp{display:none;font-size:.88rem;color:var(--muted);margin-top:6px;padding-left:6px;border-left:3px solid var(--line)}
+  .exp.on{display:block}.exp.ok{border-color:var(--green);color:#bff3ea}.exp.no{border-color:var(--grey)}
+  .barra-fixa{position:sticky;bottom:0;background:#0a0714f2;border-top:1px solid var(--line);margin:0 -16px;padding:12px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:30}
+  .barra-fixa .cont{color:var(--muted);font-size:.9rem;flex:1}
+  .codigo-box{background:var(--panel);border:1px solid var(--red);border-radius:16px;padding:20px;margin-bottom:16px;display:none}
+  .codigo-box.on{display:block}
+  .codigo-grande{font-size:1.8rem;font-weight:800;letter-spacing:2px;color:var(--red);margin:8px 0}
+  .codigo-box input{font-family:inherit;font-size:1rem;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--txt);width:150px;text-transform:uppercase}
+  .nav-fim{display:flex;justify-content:space-between;gap:10px;margin-top:22px;flex-wrap:wrap}
+  .nav-fim a{background:#22183f;border:1px solid var(--line);color:var(--txt);text-decoration:none;font-weight:700;padding:12px 18px;border-radius:12px}
+  .nav-fim a.prim{background:linear-gradient(90deg,var(--magenta),var(--blue));color:#0a0714;border:none}
+  .modal-bg{position:fixed;inset:0;z-index:70;display:none;align-items:center;justify-content:center;background:#05010fd0;padding:20px}
+  .modal-bg.on{display:flex}
+  .modal-card{max-width:430px;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .modal-acoes{display:flex;gap:10px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="modal-bg" id="modalBg"><div class="modal-card"><div id="modalTxt"></div><div class="modal-acoes" id="modalAcoes"></div></div></div>
+
+<div id="app"><div class="wrap">
+  <header><span class="chip">📝 Simulado · valendo</span>
+    <h1>Simulado — Ciências 8º ano</h1>
+    <p>Colégio São José · Rede Divina Providência</p></header>
+  <div class="barra-vermelha"></div>
+  <div class="cabec"><b>Avaliação de Ciências — 21/09</b> · 8º ano · Reprodução (plantas, invertebrados e vertebrados)<br>
+    30 questões: 24 de múltipla escolha + 3 de números romanos + 2 de somatório + 1 discursiva. Cada questão vale (0,4).<br>
+    No fim, gere seu <b>código SIM</b> para a mãe liberar o gabarito comentado.</div>
+  <div class="salvar"><div class="info" id="saveinfo">Suas respostas são salvas sozinhas.</div>
+    <button class="ghost" onclick="exportar()">📥 Exportar</button>
+    <button class="ghost" onclick="document.getElementById('imp').click()">📤 Importar</button>
+    <input id="imp" type="file" accept="application/json" style="display:none" onchange="importar(event)">
+    <button class="ghost" onclick="zerar()">🗑️ Zerar tudo</button></div>
+
+  <div class="codigo-box" id="codigoBox"></div>
+  <div id="perguntas"></div>
+
+  <div class="barra-fixa"><span class="cont" id="contResp">0 de 30 respondidas</span>
+    <button class="vermelho" id="btnFinalizar" onclick="finalizar()" disabled>🏁 Finalizar e gerar código</button></div>
+
+  <div class="nav-fim">
+    <a href="resumo.html">← Resumo</a>
+    <a class="prim" href="index.html">🏠 Página inicial</a>
+  </div>
+</div></div>
+
+<script>
+/* ================= QUESTÕES (base: livro de Ciências 8º ano — SM) ================= */
+const QUESTOES=[
+ /* ---- PLANTAS (múltipla escolha) ---- */
+ {p:"As gimnospermas são plantas que têm semente 'nua'. Isso quer dizer que:",
+  alts:[{t:"a semente não fica dentro de um fruto.",ok:true,exp:"Gimnosperma = semente sem fruto. Só a angiosperma tem fruto."},
+   {t:"a planta não produz sementes.",ok:false,exp:"Ela produz semente; só não tem fruto."},
+   {t:"a semente fica dentro de uma flor.",ok:false,exp:"Gimnospermas não têm flor."},
+   {t:"a semente é sempre venenosa.",ok:false,exp:"'Nua' não tem relação com veneno."}]},
+ {p:"A reprodução das gimnospermas não depende de água porque:",
+  alts:[{t:"o vento leva o pólen e o tubo polínico conduz o gameta masculino até o feminino.",ok:true,exp:"O tubo polínico dispensa a água."},
+   {t:"os gametas nadam pela chuva.",ok:false,exp:"Justamente NÃO dependem da água."},
+   {t:"a semente boia até outra planta.",ok:false,exp:"A fecundação não acontece assim."},
+   {t:"elas vivem apenas dentro dos rios.",ok:false,exp:"Ao contrário: ocupam a terra firme."}]},
+ {p:"As duas estruturas exclusivas das angiospermas são:",
+  alts:[{t:"a flor e o fruto.",ok:true,exp:"Só as angiospermas têm flor e fruto."},
+   {t:"o estróbilo e o pinhão.",ok:false,exp:"Esses são das gimnospermas."},
+   {t:"a raiz e o caule.",ok:false,exp:"Existem em quase todas as plantas."},
+   {t:"a folha e a semente.",ok:false,exp:"Não são exclusivas das angiospermas."}]},
+ {p:"O órgão masculino da flor é o estame, que é formado por:",
+  alts:[{t:"antera e filete.",ok:true,exp:"Estame = antera + filete (androceu)."},
+   {t:"ovário e óvulos.",ok:false,exp:"Ovário e óvulos são do carpelo (feminino)."},
+   {t:"pétala e sépala.",ok:false,exp:"Pétala atrai e sépala protege; não formam o estame."},
+   {t:"estigma e semente.",ok:false,exp:"Estigma é do carpelo; semente vem depois."}]},
+ {p:"Depois da fecundação numa angiosperma:",
+  alts:[{t:"o óvulo vira semente e o ovário vira fruto.",ok:true,exp:"Regra clássica; não inverta."},
+   {t:"o óvulo vira fruto e o ovário vira semente.",ok:false,exp:"Está invertido."},
+   {t:"os dois viram novas flores.",ok:false,exp:"Não é o que acontece."},
+   {t:"o ovário vira raiz.",ok:false,exp:"Sem relação com raiz."}]},
+ {p:"No caju, o fruto verdadeiro é:",
+  alts:[{t:"a castanha.",ok:true,exp:"A parte suculenta é pseudofruto; a castanha é o fruto verdadeiro."},
+   {t:"a parte carnosa e suculenta.",ok:false,exp:"Essa parte é o pseudofruto."},
+   {t:"a folha.",ok:false,exp:"A folha não é fruto."},
+   {t:"a raiz.",ok:false,exp:"A raiz não é fruto."}]},
+ {p:"Uma flor colorida, perfumada e com néctar provavelmente é polinizada:",
+  alts:[{t:"por animais (abelhas, borboletas, aves).",ok:true,exp:"Cor, cheiro e néctar atraem animais."},
+   {t:"apenas pelo vento.",ok:false,exp:"Flores de vento não têm cheiro nem néctar."},
+   {t:"apenas pela água.",ok:false,exp:"Não é o caso descrito."},
+   {t:"por nenhum agente (sozinha).",ok:false,exp:"A polinização precisa de um agente."}]},
+ {p:"Para uma semente germinar, ela precisa principalmente de:",
+  alts:[{t:"água, temperatura adequada, luz e oxigênio.",ok:true,exp:"São as condições da germinação."},
+   {t:"apenas escuridão total.",ok:false,exp:"A luz é um dos fatores; não é só escuridão."},
+   {t:"somente calor acima de 45°C.",ok:false,exp:"Acima de 45°C a maioria não germina."},
+   {t:"apenas sal e areia.",ok:false,exp:"Isso não favorece a germinação."}]},
+ /* ---- INVERTEBRADOS (múltipla escolha) ---- */
+ {p:"O brotamento, comum em esponjas e pólipos, é uma reprodução:",
+  alts:[{t:"assexuada, em que um broto vira novo indivíduo.",ok:true,exp:"Sem gametas = assexuada."},
+   {t:"sexuada, com troca de gametas.",ok:false,exp:"Não há gametas no brotamento."},
+   {t:"que só ocorre em vertebrados.",ok:false,exp:"É típica de invertebrados simples."},
+   {t:"que só acontece dentro da fêmea.",ok:false,exp:"Não envolve fêmea."}]},
+ {p:"Sobre as formas dos cnidários:",
+  alts:[{t:"a medusa nada e o pólipo fica fixo.",ok:true,exp:"Medusa nada; pólipo é fixo."},
+   {t:"a medusa é fixa e o pólipo nada.",ok:false,exp:"Está trocado."},
+   {t:"as duas ficam sempre fixas.",ok:false,exp:"A medusa nada."},
+   {t:"as duas nadam o tempo todo.",ok:false,exp:"O pólipo é fixo."}]},
+ {p:"Sobre o corpo dos vermes, é correto afirmar:",
+  alts:[{t:"platelminto tem corpo achatado; nematódeo, cilíndrico (ex.: lombriga).",ok:true,exp:"Achatado x cilíndrico."},
+   {t:"platelminto é cilíndrico; nematódeo é achatado.",ok:false,exp:"Está invertido."},
+   {t:"os dois têm concha.",ok:false,exp:"Concha é de moluscos."},
+   {t:"os dois têm corpo em anéis.",ok:false,exp:"Anéis são de anelídeos."}]},
+ {p:"A melhor forma de prevenir a verminose causada pela lombriga é:",
+  alts:[{t:"ter higiene e saneamento básico.",ok:true,exp:"Os ovos saem nas fezes; higiene quebra o ciclo."},
+   {t:"tomar muito sol.",ok:false,exp:"Sol não previne verminose."},
+   {t:"parar de comer frutas.",ok:false,exp:"Não é sobre frutas."},
+   {t:"dormir mais cedo.",ok:false,exp:"Sem relação com o ciclo do parasita."}]},
+ {p:"Partenogênese é quando:",
+  alts:[{t:"o óvulo se desenvolve sem fecundação.",ok:true,exp:"Ex.: alguns escorpiões e crustáceos."},
+   {t:"dois indivíduos trocam espermatozoides.",ok:false,exp:"Isso é fecundação cruzada."},
+   {t:"dois óvulos se unem.",ok:false,exp:"Não é isso."},
+   {t:"a fecundação só ocorre na água.",ok:false,exp:"Partenogênese é sem fecundação."}]},
+ {p:"A metamorfose completa dos insetos segue a sequência:",
+  alts:[{t:"ovo → larva → pupa → adulto (ex.: borboleta).",ok:true,exp:"Metamorfose completa passa pela pupa."},
+   {t:"ovo → ninfa → adulto (ex.: barata).",ok:false,exp:"Essa é a incompleta."},
+   {t:"ovo → adulto, sem fases.",ok:false,exp:"Aí seria desenvolvimento direto."},
+   {t:"larva → ovo → adulto.",ok:false,exp:"A ordem está errada."}]},
+ {p:"Na minhoca, o clitelo é importante porque:",
+  alts:[{t:"forma um casulo de muco onde ocorre a fecundação e ficam os ovos.",ok:true,exp:"Minhoca é hermafrodita, com fecundação cruzada."},
+   {t:"serve para a minhoca respirar.",ok:false,exp:"Não é a função reprodutiva descrita."},
+   {t:"é o coração da minhoca.",ok:false,exp:"O clitelo não é coração."},
+   {t:"produz veneno de defesa.",ok:false,exp:"Não é essa a função."}]},
+ /* ---- VERTEBRADOS (múltipla escolha) ---- */
+ {p:"Na maioria dos peixes ósseos, a fecundação é ___ e a larva se chama ___:",
+  alts:[{t:"externa; alevino.",ok:true,exp:"Ósseos: fecundação externa; larva = alevino."},
+   {t:"interna; girino.",ok:false,exp:"Girino é de anfíbio."},
+   {t:"externa; girino.",ok:false,exp:"A larva do peixe é o alevino."},
+   {t:"interna; pupa.",ok:false,exp:"Pupa é de inseto."}]},
+ {p:"Nos anfíbios, a larva que respira por brânquias e tem cauda é o(a):",
+  alts:[{t:"girino, que passa por metamorfose até virar o sapo adulto.",ok:true,exp:"Girino → metamorfose → adulto."},
+   {t:"alevino, larva do peixe.",ok:false,exp:"Alevino é de peixe."},
+   {t:"ninfa, fase do inseto.",ok:false,exp:"Ninfa é de inseto."},
+   {t:"pupa, dentro do casulo.",ok:false,exp:"Pupa é de inseto."}]},
+ {p:"O defeso é:",
+  alts:[{t:"o período em que a pesca é proibida na época de reprodução dos peixes.",ok:true,exp:"Protege a reprodução e a população de peixes."},
+   {t:"o nome da larva do peixe.",ok:false,exp:"A larva é o alevino."},
+   {t:"um tipo de fecundação interna.",ok:false,exp:"Defeso não é fecundação."},
+   {t:"a época em que a pesca é liberada.",ok:false,exp:"É o contrário: pesca proibida."}]},
+ {p:"Répteis e aves são chamados de amniotas porque:",
+  alts:[{t:"têm o ovo amniótico, que permitiu a reprodução longe da água.",ok:true,exp:"O ovo amniótico protege o embrião da perda de água."},
+   {t:"vivem apenas dentro da água.",ok:false,exp:"É o contrário."},
+   {t:"não têm gametas.",ok:false,exp:"Têm gametas e fecundação interna."},
+   {t:"se reproduzem por brotamento.",ok:false,exp:"Brotamento é de invertebrados simples."}]},
+ {p:"O ovo das aves tem casca dura e impermeável feita de:",
+  alts:[{t:"carbonato de cálcio.",ok:true,exp:"Casca de carbonato de cálcio; e as aves têm cuidado parental."},
+   {t:"quitina.",ok:false,exp:"Quitina é de artrópodes."},
+   {t:"gelatina.",ok:false,exp:"Casca gelatinosa é de anfíbios."},
+   {t:"areia compactada.",ok:false,exp:"A casca é de carbonato de cálcio."}]},
+ {p:"Um animal cujo embrião se desenvolve DENTRO da fêmea, nutrido por ela, é:",
+  alts:[{t:"vivíparo.",ok:true,exp:"Vivíparo = embrião se desenvolve dentro da fêmea."},
+   {t:"ovíparo.",ok:false,exp:"Ovíparo põe ovos no ambiente."},
+   {t:"ovovivíparo puro.",ok:false,exp:"No ovovivíparo o embrião fica em ovo dentro da fêmea."},
+   {t:"partenogenético.",ok:false,exp:"Partenogênese é sobre fecundação, não sobre onde o embrião cresce."}]},
+ {p:"A placenta, estrutura exclusiva dos mamíferos, serve para:",
+  alts:[{t:"passar oxigênio e nutrientes do sangue da mãe ao embrião, e receber de volta gás carbônico e excretas.",ok:true,exp:"É a função da placenta no início do desenvolvimento."},
+   {t:"produzir o leite que alimenta os filhotes.",ok:false,exp:"Isso é função das glândulas mamárias."},
+   {t:"abrigar o filhote imaturo após o nascimento.",ok:false,exp:"Isso descreve o marsúpio dos marsupiais."},
+   {t:"botar os ovos, como nos répteis.",ok:false,exp:"A placenta não bota ovos; isso lembra os monotremados."}]},
+ {p:"Um mamífero cujo embrião se desenvolve no útero, com placenta bem desenvolvida, ligado a ela pelo cordão umbilical, é um:",
+  alts:[{t:"placentário (ex.: ser humano, cão, elefante).",ok:true,exp:"Placentários têm placenta bem desenvolvida e gestação relativamente longa."},
+   {t:"monotremado (ex.: ornitorrinco).",ok:false,exp:"Monotremados são ovíparos, sem placenta."},
+   {t:"marsupial (ex.: cuíca).",ok:false,exp:"Nos marsupiais a placenta é pouco desenvolvida e o filhote termina no marsúpio."},
+   {t:"anfíbio (ex.: sapo).",ok:false,exp:"Sapo não é mamífero."}]},
+ {p:"O ornitorrinco e a equidna são mamíferos <b>monotremados</b>. Isso significa que eles:",
+  alts:[{t:"são ovíparos: o desenvolvimento acontece dentro de ovos.",ok:true,exp:"Monotremados são os únicos mamíferos ovíparos; as fêmeas não têm mamas e o filhote lambe o leite."},
+   {t:"têm a placenta mais desenvolvida entre os mamíferos.",ok:false,exp:"Placenta bem desenvolvida é dos placentários."},
+   {t:"completam o desenvolvimento na bolsa marsupial.",ok:false,exp:"Isso é dos marsupiais."},
+   {t:"não são considerados mamíferos.",ok:false,exp:"São mamíferos sim, apenas ovíparos."}]},
+ /* ---- NÚMEROS ROMANOS ---- */
+ {p:"Analise as afirmativas sobre as <b>plantas com sementes</b>:", romano:[
+   "I. As gimnospermas têm semente, mas não têm fruto.",
+   "II. Nas angiospermas, o ovário se transforma em fruto após a fecundação.",
+   "III. A reprodução das gimnospermas depende obrigatoriamente de água.",
+   "IV. As pétalas ajudam a atrair polinizadores."],
+  alts:[{t:"Estão corretas apenas I, II e IV.",ok:true,exp:"A III é falsa: a reprodução das gimnospermas NÃO depende de água (tubo polínico)."},
+   {t:"Estão corretas apenas I e III.",ok:false,exp:"A III é falsa."},
+   {t:"Estão corretas apenas II e III.",ok:false,exp:"A III é falsa; I e IV são verdadeiras."},
+   {t:"Todas estão corretas.",ok:false,exp:"A III é falsa."}]},
+ {p:"Analise as afirmativas sobre a <b>reprodução dos invertebrados</b>:", romano:[
+   "I. No brotamento, um broto do corpo forma um novo indivíduo (assexuada).",
+   "II. A medusa dos cnidários fica fixa e não nada.",
+   "III. A planária faz fecundação cruzada e tem grande regeneração.",
+   "IV. A lombriga é um nematódeo, com dimorfismo sexual."],
+  alts:[{t:"Estão corretas apenas I, III e IV.",ok:true,exp:"A II é falsa: a medusa NADA; quem fica fixo é o pólipo."},
+   {t:"Estão corretas apenas I e II.",ok:false,exp:"A II é falsa."},
+   {t:"Estão corretas apenas II e IV.",ok:false,exp:"A II é falsa."},
+   {t:"Todas estão corretas.",ok:false,exp:"A II é falsa."}]},
+ {p:"Analise as afirmativas sobre a <b>reprodução dos vertebrados</b>:", romano:[
+   "I. Na maioria dos peixes ósseos, a fecundação é externa.",
+   "II. Nos anfíbios, a larva é o girino, que passa por metamorfose.",
+   "III. Répteis e aves são amniotas (têm ovo amniótico).",
+   "IV. O ovo das aves tem casca mole e gelatinosa."],
+  alts:[{t:"Estão corretas apenas I, II e III.",ok:true,exp:"A IV é falsa: o ovo das aves tem casca dura de carbonato de cálcio."},
+   {t:"Estão corretas apenas I e IV.",ok:false,exp:"A IV é falsa."},
+   {t:"Estão corretas apenas III e IV.",ok:false,exp:"A IV é falsa."},
+   {t:"Todas estão corretas.",ok:false,exp:"A IV é falsa."}]},
+ /* ---- SOMATÓRIO ---- */
+ {p:"Sobre a reprodução das <b>angiospermas e gimnospermas</b>, some os números das afirmativas CORRETAS:", somatorio:[
+   {n:"01",t:"O estame é o órgão masculino da flor.",ok:true},
+   {n:"02",t:"Depois da fecundação, o óvulo se transforma em fruto.",ok:false},
+   {n:"04",t:"As pétalas ajudam a atrair os polinizadores.",ok:true},
+   {n:"08",t:"As gimnospermas têm um fruto envolvendo a semente.",ok:false},
+   {n:"16",t:"Depois da fecundação, o ovário se transforma em fruto.",ok:true}],
+  alts:[{t:"21",ok:true,exp:"Corretas: 01 + 04 + 16 = 21. (02 e 08 estão erradas.)"},
+   {t:"07",ok:false,exp:"07 = 01+02+04, mas a 02 está errada (óvulo vira semente, não fruto)."},
+   {t:"25",ok:false,exp:"25 = 01+08+16, mas a 08 está errada (gimnosperma não tem fruto)."},
+   {t:"11",ok:false,exp:"11 = 01+02+08, com duas afirmativas erradas."}]},
+ {p:"Sobre a reprodução dos <b>animais</b>, some os números das afirmativas CORRETAS:", somatorio:[
+   {n:"01",t:"No brotamento, um broto do corpo forma um novo indivíduo.",ok:true},
+   {n:"02",t:"A lombriga é um platelminto de corpo achatado.",ok:false},
+   {n:"04",t:"Nos anfíbios, a larva é o girino.",ok:true},
+   {n:"08",t:"O ovo das aves tem casca de carbonato de cálcio.",ok:true},
+   {n:"16",t:"Nos peixes ósseos, a fecundação é interna.",ok:false}],
+  alts:[{t:"13",ok:true,exp:"Corretas: 01 + 04 + 08 = 13. (02 e 16 estão erradas.)"},
+   {t:"07",ok:false,exp:"07 = 01+02+04, mas a 02 está errada (lombriga é nematódeo cilíndrico)."},
+   {t:"21",ok:false,exp:"21 = 01+04+16, mas a 16 está errada (fecundação dos peixes ósseos é externa)."},
+   {t:"31",ok:false,exp:"31 somaria tudo, mas 02 e 16 estão erradas."}]},
+ /* ---- DISCURSIVA ---- */
+ {p:"Explique, com as suas palavras, o caminho da reprodução de uma <b>angiosperma</b>: desde a chegada do grão de pólen até a formação da semente e do fruto.", discursiva:true,
+  modelo:"O grão de pólen chega ao estigma (topo do carpelo) e forma o tubo polínico, que leva os gametas masculinos até o óvulo. Acontece a fecundação. Depois, o óvulo se transforma em semente e o ovário se transforma em fruto."}
+];
+
+/* ================= SALVAMENTO ================= */
+const KEY='ciencias8_sj_reproducao_simulado_v1';
+let estado={resp:{},disc:{},ordem:{},finalizado:false,codigo:'',acertos:0,desbloq:false,ts:null};
+let mem={};
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return mem[k]||null;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);}catch(e){mem[k]=v;}}
+function lsDel(k){try{localStorage.removeItem(k);}catch(e){delete mem[k];}}
+function carregar(){try{const s=lsGet(KEY);if(s)estado=JSON.parse(s);if(!estado.disc)estado.disc={};}catch(e){}}
+function salvar(){estado.ts=new Date().toISOString();lsSet(KEY,JSON.stringify(estado));pintarInfo();}
+function pintarInfo(){const el=document.getElementById('saveinfo');
+  if(estado.ts){const d=new Date(estado.ts);el.innerHTML='💾 Salvo: <b>'+d.toLocaleDateString('pt-BR')+' '+d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'</b>';}
+  else el.textContent='Suas respostas são salvas sozinhas.';}
+function modalConfirm(html,onSim,txtSim,txtNao){document.getElementById('modalTxt').innerHTML=html;const ac=document.getElementById('modalAcoes');ac.innerHTML='';
+  const b1=document.createElement('button');b1.className='ghost';b1.textContent=txtNao||'Cancelar';b1.onclick=()=>document.getElementById('modalBg').classList.remove('on');
+  const b2=document.createElement('button');b2.textContent=txtSim||'Confirmar';b2.onclick=()=>{document.getElementById('modalBg').classList.remove('on');onSim&&onSim();};
+  ac.appendChild(b1);ac.appendChild(b2);document.getElementById('modalBg').classList.add('on');}
+function modalInfo(html){document.getElementById('modalTxt').innerHTML=html;const ac=document.getElementById('modalAcoes');ac.innerHTML='';
+  const b=document.createElement('button');b.textContent='Ok';b.onclick=()=>document.getElementById('modalBg').classList.remove('on');ac.appendChild(b);document.getElementById('modalBg').classList.add('on');}
+function embaralha(n,seed){let idx=[...Array(n).keys()];let s=seed;
+  for(let i=n-1;i>0;i--){s=(s*9301+49297)%233280;const j=Math.floor(s/233280*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]];}return idx;}
+function ordemDe(i){if(!estado.ordem[i]){estado.ordem[i]=embaralha(QUESTOES[i].alts.length,(i+1)*6151);}return estado.ordem[i];}
+
+const LETRAS=['A','B','C','D','E'];
+function render(){
+  const cont=document.getElementById('perguntas');cont.innerHTML='';
+  QUESTOES.forEach((q,i)=>{
+    const div=document.createElement('div');div.className='q';div.id='q'+i;
+    let badge='';
+    if(q.romano)badge='<span class="badge">Números romanos</span>';
+    else if(q.somatorio)badge='<span class="badge">Somatório</span>';
+    else if(q.discursiva)badge='<span class="badge">Discursiva</span>';
+    let corpo='';
+    if(q.romano){corpo='<div class="afirm">'+q.romano.map(x=>'<div>'+x+'</div>').join('')+'</div>';}
+    if(q.somatorio){corpo='<div class="afirm">'+q.somatorio.map(x=>'<div><span class="cod">'+x.n+'</span>'+x.t+'</div>').join('')+'</div>';}
+    let entrada='';
+    if(q.discursiva){
+      const val=(estado.disc[i]||'');
+      entrada=`<textarea id="disc${i}" oninput="onDisc(${i},this.value)" ${estado.finalizado?'disabled':''} placeholder="Escreva a sua resposta aqui...">${val.replace(/</g,'&lt;')}</textarea>
+        <div class="modelo-disc" id="modeloDisc${i}"><b>Resposta modelo (para a mãe corrigir):</b> ${q.modelo}</div>`;
+    }else{
+      const ord=ordemDe(i);let alts='';
+      ord.forEach((oi,pos)=>{const a=q.alts[oi];const sel=estado.resp[i]===oi;
+        alts+=`<label class="alt${sel?' sel':''}" id="alt${i}_${pos}" onclick="escolher(${i},${oi},${pos})">
+          <span class="letra">${LETRAS[pos]})</span>${a.t}<div class="exp" id="exp${i}_${pos}"></div></label>`;});
+      entrada=alts;
+    }
+    div.innerHTML=`<div class="enun"><span class="val">(0,4)</span><span class="num">${i+1}</span>${q.p}${badge}</div>${corpo}${entrada}`;
+    cont.appendChild(div);
+  });
+  atualizarContagem();pintarInfo();
+  if(estado.finalizado)mostrarCodigoBox();
+  if(estado.desbloq)revelarGabarito();
+}
+function escolher(i,oi,pos){if(estado.finalizado)return;estado.resp[i]=oi;const ord=ordemDe(i);
+  ord.forEach((_,p)=>{const el=document.getElementById('alt'+i+'_'+p);if(el)el.classList.remove('sel');});
+  const el=document.getElementById('alt'+i+'_'+pos);if(el)el.classList.add('sel');atualizarContagem();salvar();}
+function onDisc(i,v){estado.disc[i]=v;atualizarContagem();salvar();}
+function respondidas(){let n=0;QUESTOES.forEach((q,i)=>{
+  if(q.discursiva){if((estado.disc[i]||'').trim().length>=10)n++;}
+  else{if(estado.resp[i]!=null)n++;}});return n;}
+function atualizarContagem(){const n=respondidas();
+  document.getElementById('contResp').textContent=n+' de '+QUESTOES.length+' respondidas';
+  const b=document.getElementById('btnFinalizar');if(b&&!estado.finalizado)b.disabled=(n<QUESTOES.length);}
+function contaAcertos(){let a=0;QUESTOES.forEach((q,i)=>{if(q.discursiva)return;const oi=estado.resp[i];if(oi!=null&&q.alts[oi]&&q.alts[oi].ok)a++;});return a;}
+function totalObjetivas(){return QUESTOES.filter(q=>!q.discursiva).length;}
+function gerarCodigo(pref,ac){const L='ABCDEFGHJKLMNPQRSTUVWXYZ';const y=L[Math.floor(Math.random()*L.length)]+L[Math.floor(Math.random()*L.length)];return pref+'-'+String(ac).padStart(2,'0')+'-'+y;}
+function finalizar(forcado){if(!forcado){if(respondidas()<QUESTOES.length)return;}
+  estado.finalizado=true;estado.acertos=contaAcertos();if(!estado.codigo)estado.codigo=gerarCodigo('SIM',estado.acertos);salvar();
+  document.getElementById('btnFinalizar').disabled=true;render();mostrarCodigoBox();document.getElementById('codigoBox').scrollIntoView({behavior:'smooth'});}
+function mostrarCodigoBox(){const box=document.getElementById('codigoBox');box.classList.add('on');
+  box.innerHTML=`<h2 style="margin-top:0">🏁 Simulado finalizado!</h2>
+    <p>Mostre este código para a sua mãe. Ele guarda seus acertos nas questões objetivas (a discursiva a mãe corrige à parte).</p>
+    <div class="codigo-grande">${estado.codigo}</div>
+    <p style="color:var(--muted);font-size:.9rem">Para liberar o <b>gabarito comentado</b>, digite o código:</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <input id="codeInput" placeholder="SIM-..." value="${estado.desbloq?estado.codigo:''}">
+      <button class="vermelho" onclick="conferirCodigo()">🔓 Liberar gabarito</button></div>
+    <div id="codeMsg" style="margin-top:8px;font-size:.9rem;color:var(--muted)"></div>`;
+  if(estado.desbloq){const m=document.getElementById('codeMsg');if(m)m.innerHTML='Gabarito liberado. Acertos (objetivas): <b>'+estado.acertos+' de '+totalObjetivas()+'</b>. ✅';}}
+function conferirCodigo(){const v=(document.getElementById('codeInput').value||'').trim().toUpperCase();const msg=document.getElementById('codeMsg');
+  if(v===estado.codigo){estado.desbloq=true;salvar();revelarGabarito();msg.innerHTML='Gabarito liberado. Acertos (objetivas): <b>'+estado.acertos+' de '+totalObjetivas()+'</b>. ✅';}
+  else msg.textContent='Código incorreto. Confira as letras e números.';}
+function revelarGabarito(){QUESTOES.forEach((q,i)=>{
+  if(q.discursiva){const md=document.getElementById('modeloDisc'+i);if(md)md.classList.add('on');return;}
+  const ord=ordemDe(i);
+  ord.forEach((oi,pos)=>{const a=q.alts[oi];const el=document.getElementById('alt'+i+'_'+pos);const exp=document.getElementById('exp'+i+'_'+pos);if(!el)return;
+    el.classList.add('cinza');
+    if(a.ok){el.classList.remove('cinza');el.classList.add('correta');if(exp){exp.className='exp on ok';exp.innerHTML='✔ Correta — '+a.exp;}}
+    else{if(estado.resp[i]===oi)el.classList.add('errada-sel');if(exp){exp.className='exp on no';exp.innerHTML='✗ '+a.exp;}}});});}
+function exportar(){const out={simulado:estado};const blob=new Blob([JSON.stringify(out,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='progresso-simulado-ciencias8.json';a.click();}
+function importar(ev){const f=ev.target.files[0];if(!f)return;const r=new FileReader();
+  r.onload=()=>{try{const o=JSON.parse(r.result);if(o.simulado)estado=o.simulado;else estado=o;if(!estado.disc)estado.disc={};salvar();render();modalInfo('<p>✅ Importado!</p>');}catch(e){modalInfo('<p>Arquivo inválido.</p>');}};
+  r.readAsText(f);}
+function zerar(){modalConfirm('<p><b>Zerar tudo?</b></p><p>Apaga respostas e código, para outra criança usar.</p>',
+  ()=>{estado={resp:{},disc:{},ordem:{},finalizado:false,codigo:'',acertos:0,desbloq:false,ts:null};lsDel(KEY);document.getElementById('codigoBox').classList.remove('on');render();modalInfo('<p>🗑️ Zerado!</p>');},'Sim, zerar','Cancelar');}
+carregar();render();
+</script>
+</body>
+</html>
